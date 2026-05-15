@@ -86,9 +86,9 @@ import projet5_5 from "./assets/image/projet5_5.jpeg";
 import projet5_6 from "./assets/image/projet5_6.jpeg";
 
 // Project 8 Images (LHANOUT)
-import projet8_1 from "./assets/image/projet8_2.jpeg";
+import projet8_1 from "./assets/image/projet8_3.jpeg";
 import projet8_2 from "./assets/image/projet8_1.jpeg";
-import projet8_3 from "./assets/image/projet8_3.jpeg";
+import projet8_3 from "./assets/image/projet8_2.jpeg";
 import projet8_4 from "./assets/image/projet8_4.jpeg";
 import projet8_5 from "./assets/image/projet8_5.jpeg";
 import projet8_6 from "./assets/image/projet8_6.jpeg";
