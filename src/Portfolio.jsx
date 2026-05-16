@@ -27,7 +27,10 @@ import {
   CheckCircle,
   Search,
   Filter,
-  ArrowLeft
+  ArrowLeft,
+  Send,
+  AlertCircle,
+  Loader2
 } from "lucide-react";
 
 import profileImg from "./assets/image/cv.avif";
@@ -108,8 +111,9 @@ const Portfolio = () => {
   const [theme, setTheme] = useState('dark');
   const [activeSection, setActiveSection] = useState('home');
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [formData, setFormData] = useState({ name: '', email: '', message: '' });
-  const [formStatus, setFormStatus] = useState('');
+  const [formData, setFormData] = useState({ name: '', email: '', message: '', 'bot-field': '' });
+  const [formStatus, setFormStatus] = useState({ type: '', message: '' });
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [hoveredProject, setHoveredProject] = useState(null);
   const [selectedFormation, setSelectedFormation] = useState(null);
   const [selectedProjectScreenshots, setSelectedProjectScreenshots] = useState(null);
@@ -144,12 +148,49 @@ const Portfolio = () => {
     setMobileMenuOpen(false);
   };
 
-  const handleSubmit = () => {
-    if (formData.name && formData.email && formData.message) {
-      setFormStatus('Message envoyé avec succès ! 🎉');
-      setFormData({ name: '', email: '', message: '' });
-      setTimeout(() => setFormStatus(''), 3000);
+  const encode = (data) => {
+    return Object.keys(data)
+      .map(key => encodeURIComponent(key) + "=" + encodeURIComponent(data[key]))
+      .join("&");
+  }
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (!formData.name || !formData.email || !formData.message) {
+      setFormStatus({ type: 'error', message: 'Veuillez remplir tous les champs obligatoires.' });
+      return;
     }
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(formData.email)) {
+      setFormStatus({ type: 'error', message: 'Veuillez entrer une adresse email valide.' });
+      return;
+    }
+
+    if (formData.message.length < 10) {
+      setFormStatus({ type: 'error', message: 'Votre message doit contenir au moins 10 caractères.' });
+      return;
+    }
+
+    setIsSubmitting(true);
+    setFormStatus({ type: '', message: '' });
+
+    fetch("/", {
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body: encode({ "form-name": "contact", ...formData })
+    })
+      .then(() => {
+        setFormStatus({ type: 'success', message: 'Message envoyé avec succès ! 🎉 Je vous répondrai bientôt.' });
+        setFormData({ name: '', email: '', message: '', 'bot-field': '' });
+      })
+      .catch((error) => {
+        setFormStatus({ type: 'error', message: "Une erreur s'est produite lors de l'envoi. Veuillez réessayer." });
+      })
+      .finally(() => {
+        setIsSubmitting(false);
+        setTimeout(() => setFormStatus({ type: '', message: '' }), 6000);
+      });
   };
 
   // ===== البيانات المحدّثة =====
@@ -1551,59 +1592,157 @@ const Portfolio = () => {
               </div>
             </div>
 
-            <div className={`${cardClass} rounded-2xl p-8 shadow-xl border ${borderClass}`}>
-              <h3 className="text-2xl font-semibold mb-6">Envoyer un Message</h3>
+            <div className={`relative overflow-hidden rounded-3xl p-8 shadow-2xl transition-all duration-500`}
+                 style={{
+                   background: theme === 'dark' ? 'rgba(20, 20, 30, 0.4)' : 'rgba(255, 255, 255, 0.6)',
+                   backdropFilter: 'blur(20px)',
+                   WebkitBackdropFilter: 'blur(20px)',
+                   border: theme === 'dark' ? '1px solid rgba(255, 255, 255, 0.08)' : '1px solid rgba(0, 0, 0, 0.08)',
+                 }}>
+              
+              {/* Glassmorphism gradient background */}
+              <div className="absolute top-0 right-0 w-64 h-64 bg-blue-500/10 rounded-full blur-3xl -z-10" />
+              <div className="absolute bottom-0 left-0 w-64 h-64 bg-purple-500/10 rounded-full blur-3xl -z-10" />
 
-              <div className="space-y-6">
-                <div>
-                  <label className="block mb-2 font-medium text-gray-300">Nom Complet</label>
+              <h3 className={`text-2xl font-bold mb-8 ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>Envoyer un Message</h3>
+
+              <form 
+                name="contact" 
+                method="POST" 
+                data-netlify="true" 
+                netlify-honeypot="bot-field"
+                onSubmit={handleSubmit}
+                className="space-y-6 relative z-10"
+              >
+                <input type="hidden" name="form-name" value="contact" />
+                
+                <p className="hidden">
+                  <label>
+                    Don’t fill this out if you're human: <input name="bot-field" onChange={(e) => setFormData({...formData, 'bot-field': e.target.value})} />
+                  </label>
+                </p>
+
+                <div className="relative group">
                   <input
                     type="text"
+                    id="name"
+                    name="name"
+                    required
                     value={formData.name}
                     onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                    className={`w-full px-4 py-3 rounded-xl border ${borderClass} ${theme === 'dark' ? 'bg-gray-800/50' : 'bg-white'
-                      } focus:outline-none focus:ring-2 focus:ring-blue-500/50 transition-all duration-300`}
+                    className={`peer w-full px-4 py-4 rounded-xl border-2 ${
+                      theme === 'dark' 
+                        ? 'bg-gray-900/40 border-gray-700/50 text-white focus:border-blue-500' 
+                        : 'bg-white/50 border-gray-200 text-gray-900 focus:border-blue-500'
+                    } focus:outline-none focus:ring-4 focus:ring-blue-500/10 transition-all duration-300 placeholder-transparent`}
                     placeholder="John Doe"
                   />
+                  <label 
+                    htmlFor="name" 
+                    className={`absolute left-4 top-4 text-sm transition-all duration-300 cursor-text
+                      peer-placeholder-shown:text-base peer-placeholder-shown:top-4 
+                      peer-focus:-top-2.5 peer-focus:text-xs peer-focus:px-1
+                      ${formData.name ? '-top-2.5 text-xs px-1' : ''}
+                      ${theme === 'dark' ? 'text-gray-400 peer-focus:text-blue-400' : 'text-gray-500 peer-focus:text-blue-600'}
+                    `}
+                    style={{ background: formData.name ? (theme === 'dark' ? '#151520' : '#ffffff') : 'transparent' }}
+                  >
+                    Nom Complet
+                  </label>
                 </div>
 
-                <div>
-                  <label className="block mb-2 font-medium text-gray-300">Adresse Email</label>
+                <div className="relative group">
                   <input
                     type="email"
+                    id="email"
+                    name="email"
+                    required
                     value={formData.email}
                     onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                    className={`w-full px-4 py-3 rounded-xl border ${borderClass} ${theme === 'dark' ? 'bg-gray-800/50' : 'bg-white'
-                      } focus:outline-none focus:ring-2 focus:ring-blue-500/50 transition-all duration-300`}
+                    className={`peer w-full px-4 py-4 rounded-xl border-2 ${
+                      theme === 'dark' 
+                        ? 'bg-gray-900/40 border-gray-700/50 text-white focus:border-blue-500' 
+                        : 'bg-white/50 border-gray-200 text-gray-900 focus:border-blue-500'
+                    } focus:outline-none focus:ring-4 focus:ring-blue-500/10 transition-all duration-300 placeholder-transparent`}
                     placeholder="john@example.com"
                   />
+                  <label 
+                    htmlFor="email" 
+                    className={`absolute left-4 top-4 text-sm transition-all duration-300 cursor-text
+                      peer-placeholder-shown:text-base peer-placeholder-shown:top-4 
+                      peer-focus:-top-2.5 peer-focus:text-xs peer-focus:px-1
+                      ${formData.email ? '-top-2.5 text-xs px-1' : ''}
+                      ${theme === 'dark' ? 'text-gray-400 peer-focus:text-blue-400' : 'text-gray-500 peer-focus:text-blue-600'}
+                    `}
+                    style={{ background: formData.email ? (theme === 'dark' ? '#151520' : '#ffffff') : 'transparent' }}
+                  >
+                    Adresse Email
+                  </label>
                 </div>
 
-                <div>
-                  <label className="block mb-2 font-medium text-gray-300">Votre Message</label>
+                <div className="relative group">
                   <textarea
+                    id="message"
+                    name="message"
+                    required
+                    minLength="10"
                     value={formData.message}
                     onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                     rows="5"
-                    className={`w-full px-4 py-3 rounded-xl border ${borderClass} ${theme === 'dark' ? 'bg-gray-800/50' : 'bg-white'
-                      } focus:outline-none focus:ring-2 focus:ring-blue-500/50 transition-all duration-300`}
+                    className={`peer w-full px-4 py-4 rounded-xl border-2 ${
+                      theme === 'dark' 
+                        ? 'bg-gray-900/40 border-gray-700/50 text-white focus:border-blue-500' 
+                        : 'bg-white/50 border-gray-200 text-gray-900 focus:border-blue-500'
+                    } focus:outline-none focus:ring-4 focus:ring-blue-500/10 transition-all duration-300 placeholder-transparent resize-none`}
                     placeholder="Tell me about your project..."
                   />
+                  <label 
+                    htmlFor="message" 
+                    className={`absolute left-4 top-4 text-sm transition-all duration-300 cursor-text
+                      peer-placeholder-shown:text-base peer-placeholder-shown:top-4 
+                      peer-focus:-top-2.5 peer-focus:text-xs peer-focus:px-1
+                      ${formData.message ? '-top-2.5 text-xs px-1' : ''}
+                      ${theme === 'dark' ? 'text-gray-400 peer-focus:text-blue-400' : 'text-gray-500 peer-focus:text-blue-600'}
+                    `}
+                    style={{ background: formData.message ? (theme === 'dark' ? '#151520' : '#ffffff') : 'transparent' }}
+                  >
+                    Votre Message
+                  </label>
                 </div>
 
-                <button
-                  onClick={handleSubmit}
-                  className="w-full py-4 bg-gradient-to-r from-blue-500 to-purple-600 rounded-xl font-semibold hover:shadow-xl hover:shadow-purple-500/30 hover:-translate-y-1 transition-all duration-300"
-                >
-                  Envoyer le Message
-                </button>
-
-                {formStatus && (
-                  <div className="mt-4 p-4 rounded-xl bg-gradient-to-r from-green-500/20 to-emerald-500/20 border border-green-500/30">
-                    <p className="text-center text-green-400 font-medium">{formStatus}</p>
+                {formStatus.message && (
+                  <div className={`p-4 rounded-xl text-sm font-medium transition-all duration-300 flex items-center gap-3 border ${
+                    formStatus.type === 'success' 
+                      ? 'bg-green-500/10 text-green-400 border-green-500/20' 
+                      : 'bg-red-500/10 text-red-400 border-red-500/20'
+                  }`}>
+                    {formStatus.type === 'success' ? <CheckCircle size={18} /> : <AlertCircle size={18} />}
+                    {formStatus.message}
                   </div>
                 )}
-              </div>
+
+                <button
+                  type="submit"
+                  disabled={isSubmitting}
+                  className={`w-full py-4 rounded-xl font-bold tracking-wide transition-all duration-300 flex items-center justify-center gap-2 group ${
+                    isSubmitting 
+                      ? 'bg-gray-600 cursor-not-allowed text-gray-300' 
+                      : 'bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white hover:shadow-xl hover:shadow-purple-500/30 hover:-translate-y-1'
+                  }`}
+                >
+                  {isSubmitting ? (
+                    <>
+                      <Loader2 size={20} className="animate-spin" />
+                      Envoi en cours...
+                    </>
+                  ) : (
+                    <>
+                      Envoyer le Message
+                      <Send size={18} className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
+                    </>
+                  )}
+                </button>
+              </form>
             </div>
           </div>
         </div>
