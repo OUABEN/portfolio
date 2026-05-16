@@ -534,41 +534,126 @@ const Portfolio = () => {
 
           {/* Grid */}
           {filteredProjects.length > 0 ? (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
               {filteredProjects.map((project, index) => (
                 <div
                   key={index}
-                  className={`group ${cardClass} rounded-2xl overflow-hidden border ${borderClass} shadow-xl hover:shadow-2xl transition-all duration-500 hover:-translate-y-2`}
+                  className="group relative rounded-3xl cursor-pointer"
                   onClick={() => {
                     setSelectedProjectScreenshots(project.screenshots);
                     setCurrentScreenshotIndex(0);
                   }}
                 >
-                  <div className="relative h-48 overflow-hidden">
-                    <img
-                      src={project.image}
-                      alt={project.title}
-                      className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-gray-900/80 to-transparent" />
-                  </div>
-                  <div className="p-6">
-                    <h3 className="text-xl font-bold mb-2 group-hover:text-blue-400 transition-colors line-clamp-1">{project.title}</h3>
-                    <p className="text-gray-400 text-sm mb-4 line-clamp-2">{project.description}</p>
-                    <div className="flex flex-wrap gap-2 mb-6">
-                      {project.tech.slice(0, 3).map(t => (
-                        <span key={t} className="text-[10px] uppercase tracking-wider px-2 py-1 rounded bg-blue-500/10 text-blue-400 border border-blue-500/20">{t}</span>
-                      ))}
-                      {project.tech.length > 3 && <span className="text-[10px] text-gray-500">+{project.tech.length - 3}</span>}
+                  {/* Subtle animated background glow on hover */}
+                  <div className="absolute -inset-1 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 rounded-3xl opacity-0 group-hover:opacity-25 blur-xl transition-all duration-700" />
+                  
+                  <div 
+                    className="relative h-full flex flex-col rounded-3xl overflow-hidden transition-all duration-500 group-hover:-translate-y-2 group-hover:shadow-[0_20px_40px_-15px_rgba(0,0,0,0.5)]"
+                    style={{
+                      background: theme === 'dark' 
+                        ? 'rgba(20, 20, 30, 0.4)' 
+                        : 'rgba(255, 255, 255, 0.6)',
+                      backdropFilter: 'blur(20px)',
+                      WebkitBackdropFilter: 'blur(20px)',
+                      border: theme === 'dark' 
+                        ? '1px solid rgba(255, 255, 255, 0.08)' 
+                        : '1px solid rgba(0, 0, 0, 0.08)',
+                    }}
+                  >
+                    {/* Top glass reflection line */}
+                    <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 z-20" />
+
+                    <div className="relative overflow-hidden h-40 sm:h-48 w-full shrink-0">
+                      <img
+                        src={project.image}
+                        alt={project.title}
+                        className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700 ease-out"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-gray-900/90 via-gray-900/40 to-transparent" />
+                      
+                      {/* Badge */}
+                      {project.featured && (
+                        <div className="absolute top-3 left-3 z-10">
+                          <span className="px-2.5 py-1 rounded-full bg-gradient-to-r from-blue-600/90 to-purple-600/90 text-white text-[9px] font-bold tracking-widest uppercase backdrop-blur-md shadow-lg border border-white/20">
+                            En vedette
+                          </span>
+                        </div>
+                      )}
+
+                      {/* Quick view text overlay on hover */}
+                      <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-10">
+                        <span className="px-4 py-2 rounded-full bg-black/60 text-white/95 text-xs font-medium backdrop-blur-md border border-white/20 flex items-center gap-1.5 transform translate-y-4 group-hover:translate-y-0 transition-all duration-500 shadow-xl">
+                          <Search size={14} /> Voir images
+                        </span>
+                      </div>
                     </div>
-                    <div className="flex justify-between items-center">
-                      <button className="text-blue-500 text-sm font-semibold flex items-center gap-1 group/btn">
-                        Détails
-                        <ExternalLink size={14} className="group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5 transition-transform" />
-                      </button>
-                      <div className="flex gap-3">
-                        <a href={project.github} className="text-gray-400 hover:text-white transition-colors"><Github size={18} /></a>
-                        <a href={project.live} className="text-gray-400 hover:text-white transition-colors"><ExternalLink size={18} /></a>
+
+                    <div className="p-4 sm:p-5 flex flex-col flex-grow relative z-10">
+                      <div className="flex justify-between items-start gap-2 mb-2">
+                        <h3 className={`text-xl font-bold tracking-tight line-clamp-1 transition-all duration-500 ${
+                          theme === 'dark' 
+                            ? 'text-gray-100 group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-blue-400 group-hover:to-purple-400' 
+                            : 'text-gray-900 group-hover:text-blue-600'
+                        }`}>
+                          {project.title}
+                        </h3>
+                        
+                        {/* Action Links */}
+                        <div className="flex gap-1.5 shrink-0 mt-0.5">
+                          <a
+                            href={project.github}
+                            onClick={(e) => e.stopPropagation()}
+                            className={`flex items-center justify-center w-8 h-8 rounded-full transition-all duration-300 hover:scale-110 shadow-sm ${
+                              theme === 'dark' 
+                                ? 'bg-white/5 hover:bg-white/10 text-gray-400 hover:text-white border border-white/5 hover:border-white/20' 
+                                : 'bg-black/5 hover:bg-black/10 text-gray-600 hover:text-gray-900 border border-black/5 hover:border-black/20'
+                            }`}
+                          >
+                            <Github size={14} />
+                          </a>
+                          <button
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              setSelectedProjectScreenshots(project.screenshots);
+                              setCurrentScreenshotIndex(0);
+                            }}
+                            className={`flex items-center justify-center w-8 h-8 rounded-full transition-all duration-300 hover:scale-110 shadow-sm ${
+                              theme === 'dark' 
+                                ? 'bg-white/5 hover:bg-white/10 text-gray-400 hover:text-white border border-white/5 hover:border-white/20' 
+                                : 'bg-black/5 hover:bg-black/10 text-gray-600 hover:text-gray-900 border border-black/5 hover:border-black/20'
+                            }`}
+                          >
+                            <ExternalLink size={14} />
+                          </button>
+                        </div>
+                      </div>
+
+                      <p className={`text-xs sm:text-sm line-clamp-2 leading-relaxed mb-6 flex-grow ${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'}`}>
+                        {project.description}
+                      </p>
+
+                      <div className="flex flex-wrap gap-1.5 mt-auto">
+                        {project.tech.slice(0, 3).map((tech) => (
+                          <span
+                            key={tech}
+                            className={`px-2.5 py-1 text-[9px] sm:text-[10px] font-semibold tracking-wide uppercase rounded-md transition-colors duration-300 ${
+                              theme === 'dark'
+                                ? 'bg-white/5 border border-white/10 text-gray-300 group-hover:border-white/20 group-hover:bg-white/10'
+                                : 'bg-black/5 border border-black/10 text-gray-700 group-hover:border-black/20 group-hover:bg-black/10'
+                            }`}
+                          >
+                            {tech}
+                          </span>
+                        ))}
+                        {project.tech.length > 3 && (
+                           <span className={`px-2.5 py-1 text-[9px] sm:text-[10px] font-semibold tracking-wide uppercase rounded-md transition-colors duration-300 ${
+                            theme === 'dark'
+                              ? 'bg-transparent text-gray-500'
+                              : 'bg-transparent text-gray-400'
+                          }`}>
+                             +{project.tech.length - 3}
+                           </span>
+                        )}
                       </div>
                     </div>
                   </div>
@@ -593,27 +678,33 @@ const Portfolio = () => {
     return (
       <div className={`min-h-screen ${bgClass} ${textClass} transition-colors duration-500`}>
         <ProjectModal />
-        <nav className={`fixed top-0 w-full z-50 backdrop-blur-lg ${theme === 'dark' ? 'bg-gray-900/90' : 'bg-white/90'} border-b ${borderClass} transition-all duration-300`}>
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="flex justify-between items-center h-16">
-              <div
-                className="text-2xl font-bold bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 bg-clip-text text-transparent cursor-pointer"
-                onClick={() => setShowAllProjects(false)}
-              >
-                {'<OUABEN />'}
-              </div>
-              <button
-                onClick={toggleTheme}
-                className={`p-2 rounded-full transition-all duration-300 hover:scale-110 ${theme === 'dark'
-                  ? 'bg-gradient-to-br from-gray-800 to-gray-900'
-                  : 'bg-gradient-to-br from-gray-200 to-gray-300'
-                  }`}
-              >
-                {theme === 'dark' ? <Sun size={20} /> : <Moon size={20} />}
-              </button>
+        {/* ── All-Projects floating pill navbar ── */}
+        <div className="fixed top-4 left-1/2 -translate-x-1/2 z-50 w-[calc(100%-2rem)] max-w-2xl">
+          <nav
+            style={{
+              background: 'rgba(8, 8, 20, 0.65)',
+              backdropFilter: 'blur(28px) saturate(180%)',
+              WebkitBackdropFilter: 'blur(28px) saturate(180%)',
+              border: '1px solid rgba(255,255,255,0.08)',
+              boxShadow: '0 8px 40px rgba(0,0,0,0.45), 0 0 0 0.5px rgba(255,255,255,0.04), inset 0 1px 0 rgba(255,255,255,0.06)'
+            }}
+            className="rounded-full px-4 py-2.5 flex items-center justify-between"
+          >
+            <div
+              className="text-lg font-bold bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent cursor-pointer select-none tracking-tight"
+              onClick={() => setShowAllProjects(false)}
+            >
+              {'<OUABEN />'}
             </div>
-          </div>
-        </nav>
+            <button
+              onClick={toggleTheme}
+              style={{ background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.08)' }}
+              className="p-2 rounded-full transition-all duration-300 hover:scale-110 hover:shadow-lg hover:shadow-purple-500/20"
+            >
+              {theme === 'dark' ? <Sun size={16} className="text-yellow-300" /> : <Moon size={16} className="text-blue-400" />}
+            </button>
+          </nav>
+        </div>
         <AllProjectsView />
       </div>
     );
@@ -623,93 +714,231 @@ const Portfolio = () => {
     <div className={`min-h-screen ${bgClass} ${textClass} transition-colors duration-500`}>
       <FormationModal />
       <ProjectModal />
-      {/* Navigation */}
-      <nav className={`fixed top-0 w-full z-50 backdrop-blur-lg ${theme === 'dark' ? 'bg-gray-900/90' : 'bg-white/90'} border-b ${borderClass} transition-all duration-300`}>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
-            <div className="text-2xl font-bold bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 bg-clip-text text-transparent animate-gradient">
-              {'<OUABEN />'}
-            </div>
+      {/* ── Premium Floating Glassmorphism Navbar ── */}
+      <div className="fixed top-4 left-1/2 -translate-x-1/2 z-50 w-[calc(100%-2rem)] max-w-5xl px-0">
+        <nav
+          role="navigation"
+          aria-label="Main navigation"
+          style={{
+            background: theme === 'dark'
+              ? 'rgba(8, 8, 20, 0.72)'
+              : 'rgba(255, 255, 255, 0.70)',
+            backdropFilter: 'blur(32px) saturate(200%)',
+            WebkitBackdropFilter: 'blur(32px) saturate(200%)',
+            border: theme === 'dark'
+              ? '1px solid rgba(255,255,255,0.07)'
+              : '1px solid rgba(0,0,0,0.08)',
+            boxShadow: theme === 'dark'
+              ? '0 8px 48px rgba(0,0,0,0.55), 0 0 0 0.5px rgba(255,255,255,0.04), inset 0 1px 0 rgba(255,255,255,0.07)'
+              : '0 8px 40px rgba(0,0,0,0.12), 0 2px 0 rgba(0,0,0,0.04)'
+          }}
+          className="rounded-full px-3 sm:px-5 py-2 flex items-center justify-between gap-3"
+        >
 
-            <div className="hidden md:flex space-x-8">
-              {[
-                { id: 'home', label: 'Accueil' },
-                { id: 'about', label: 'À propos' },
-                { id: 'skills', label: 'Compétences' },
-                { id: 'projects', label: 'Projets' },
-                { id: 'formation', label: 'Formation' },
-                { id: 'experience', label: 'Éducation' },
-                { id: 'contact', label: 'Contact' }
-              ].map((item) => (
+          {/* ── Logo ── */}
+          <button
+            onClick={() => scrollToSection('home')}
+            aria-label="Go to top"
+            className="flex-shrink-0 text-lg font-extrabold bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent select-none tracking-tight transition-opacity duration-200 hover:opacity-80"
+          >
+            {'<OUABEN />'}
+          </button>
+
+          {/* ── Desktop Nav Links ── */}
+          <div className="hidden md:flex items-center gap-1">
+            {[
+              { id: 'home',       label: 'Home' },
+              { id: 'about',      label: 'About' },
+              { id: 'skills',     label: 'Skills' },
+              { id: 'projects',   label: 'Projects' },
+              { id: 'formation',  label: 'Certifications' },
+              { id: 'experience', label: 'Éducation' },
+              { id: 'contact',    label: 'Contact' },
+            ].map((item) => {
+              const isActive = activeSection === item.id;
+              return (
                 <button
                   key={item.id}
                   onClick={() => scrollToSection(item.id)}
-                  className={`transition-all duration-300 relative group ${activeSection === item.id ? 'text-blue-500' : 'hover:text-blue-400'
-                    }`}
+                  aria-current={isActive ? 'page' : undefined}
+                  className="relative px-3 py-1.5 text-sm font-medium rounded-full transition-all duration-300 group outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
+                  style={{
+                    color: isActive
+                      ? '#fff'
+                      : theme === 'dark' ? 'rgba(200,200,220,0.75)' : 'rgba(40,40,60,0.75)'
+                  }}
                 >
-                  {item.label}
-                  <span className={`absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-blue-500 to-purple-500 transition-all duration-300 group-hover:w-full ${activeSection === item.id ? 'w-full' : ''
-                    }`} />
+                  {/* active pill background */}
+                  {isActive && (
+                    <span
+                      className="absolute inset-0 rounded-full"
+                      style={{
+                        background: 'linear-gradient(135deg, rgba(59,130,246,0.30), rgba(139,92,246,0.30))',
+                        border: '1px solid rgba(139,92,246,0.25)',
+                        boxShadow: '0 0 12px rgba(139,92,246,0.25)'
+                      }}
+                    />
+                  )}
+                  {/* hover glow */}
+                  <span
+                    className="absolute inset-0 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                    style={{ background: 'rgba(139,92,246,0.10)' }}
+                  />
+                  <span className="relative z-10">{item.label}</span>
+                  {/* animated underline */}
+                  <span
+                    className={`absolute bottom-0.5 left-1/2 -translate-x-1/2 h-px bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 transition-all duration-300 rounded-full ${
+                      isActive ? 'w-3/5 opacity-80' : 'w-0 opacity-0 group-hover:w-3/5 group-hover:opacity-60'
+                    }`}
+                  />
                 </button>
-              ))}
-            </div>
-
-            <div className="flex items-center space-x-4">
-              <button
-                onClick={toggleTheme}
-                className={`p-2 rounded-full transition-all duration-300 hover:scale-110 ${theme === 'dark'
-                  ? 'bg-gradient-to-br from-gray-800 to-gray-900 hover:shadow-lg hover:shadow-purple-500/20'
-                  : 'bg-gradient-to-br from-gray-200 to-gray-300 hover:shadow-lg'
-                  }`}
-              >
-                {theme === 'dark' ? <Sun size={20} /> : <Moon size={20} />}
-              </button>
-
-              <button className="hidden md:flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-blue-500 to-purple-600 text-white font-medium hover:shadow-lg hover:shadow-purple-500/30 transition-all duration-300">
-                <Download size={18} />
-                Mon CV
-              </button>
-
-              <button
-                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                className="md:hidden p-2"
-              >
-                {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
-              </button>
-            </div>
+              );
+            })}
           </div>
 
-          {mobileMenuOpen && (
-            <div className="md:hidden py-4 space-y-2">
-              {[
-                { id: 'home', label: 'Accueil' },
-                { id: 'about', label: 'À propos' },
-                { id: 'skills', label: 'Compétences' },
-                { id: 'projects', label: 'Projets' },
-                { id: 'formation', label: 'Formation' },
-                { id: 'experience', label: 'Éducation' },
-                { id: 'contact', label: 'Contact' }
-              ].map((item) => (
+          {/* ── Right Actions ── */}
+          <div className="flex items-center gap-2 flex-shrink-0">
+            {/* Theme toggle */}
+            <button
+              onClick={toggleTheme}
+              aria-label="Toggle theme"
+              style={{ background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.08)' }}
+              className="p-2 rounded-full transition-all duration-300 hover:scale-110 hover:shadow-md hover:shadow-purple-500/20 outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
+            >
+              {theme === 'dark'
+                ? <Sun size={15} className="text-yellow-300" />
+                : <Moon size={15} className="text-slate-600" />}
+            </button>
+
+            {/* Let's Talk CTA */}
+            <button
+              onClick={() => scrollToSection('contact')}
+              className="hidden md:inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-sm font-semibold text-white transition-all duration-300 hover:scale-105 hover:shadow-xl focus-visible:ring-2 focus-visible:ring-purple-500 outline-none"
+              style={{
+                background: 'linear-gradient(135deg, #3b82f6, #8b5cf6, #ec4899)',
+                backgroundSize: '200% 200%',
+                boxShadow: '0 4px 20px rgba(139,92,246,0.40), inset 0 1px 0 rgba(255,255,255,0.15)'
+              }}
+            >
+              <span className="inline-block w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse" />
+              Let's Talk
+            </button>
+
+            {/* Hamburger */}
+            <button
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              aria-label={mobileMenuOpen ? 'Close menu' : 'Open menu'}
+              aria-expanded={mobileMenuOpen}
+              style={{ background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.08)' }}
+              className="md:hidden p-2 rounded-full transition-all duration-300 hover:scale-105 outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
+            >
+              <div className="w-4 h-4 flex flex-col justify-center items-center gap-[4px]">
+                <span
+                  className="block h-px rounded-full transition-all duration-300 origin-center"
+                  style={{
+                    width: '16px',
+                    background: theme === 'dark' ? 'rgba(200,200,220,0.9)' : 'rgba(40,40,60,0.9)',
+                    transform: mobileMenuOpen ? 'translateY(5px) rotate(45deg)' : 'none'
+                  }}
+                />
+                <span
+                  className="block h-px rounded-full transition-all duration-300"
+                  style={{
+                    width: '12px',
+                    background: theme === 'dark' ? 'rgba(200,200,220,0.9)' : 'rgba(40,40,60,0.9)',
+                    opacity: mobileMenuOpen ? 0 : 1,
+                    transform: mobileMenuOpen ? 'scaleX(0)' : 'none'
+                  }}
+                />
+                <span
+                  className="block h-px rounded-full transition-all duration-300 origin-center"
+                  style={{
+                    width: '16px',
+                    background: theme === 'dark' ? 'rgba(200,200,220,0.9)' : 'rgba(40,40,60,0.9)',
+                    transform: mobileMenuOpen ? 'translateY(-5px) rotate(-45deg)' : 'none'
+                  }}
+                />
+              </div>
+            </button>
+          </div>
+        </nav>
+
+        {/* ── Mobile Drawer ── */}
+        <div
+          className="md:hidden overflow-hidden transition-all duration-500"
+          style={{
+            maxHeight: mobileMenuOpen ? '420px' : '0px',
+            opacity: mobileMenuOpen ? 1 : 0,
+          }}
+        >
+          <div
+            className="mt-2 rounded-3xl p-4 flex flex-col gap-1"
+            style={{
+              background: theme === 'dark'
+                ? 'rgba(8, 8, 20, 0.85)'
+                : 'rgba(255, 255, 255, 0.85)',
+              backdropFilter: 'blur(32px) saturate(200%)',
+              WebkitBackdropFilter: 'blur(32px) saturate(200%)',
+              border: theme === 'dark'
+                ? '1px solid rgba(255,255,255,0.07)'
+                : '1px solid rgba(0,0,0,0.07)',
+              boxShadow: '0 16px 48px rgba(0,0,0,0.40)'
+            }}
+          >
+            {[
+              { id: 'home',       label: 'Home' },
+              { id: 'about',      label: 'About' },
+              { id: 'skills',     label: 'Skills' },
+              { id: 'projects',   label: 'Projects' },
+              { id: 'formation',  label: 'Certifications' },
+              { id: 'experience', label: 'Éducation' },
+              { id: 'contact',    label: 'Contact' },
+            ].map((item, i) => {
+              const isActive = activeSection === item.id;
+              return (
                 <button
                   key={item.id}
                   onClick={() => scrollToSection(item.id)}
-                  className={`block w-full text-left px-4 py-3 rounded-lg transition-all duration-300 ${activeSection === item.id
-                    ? 'bg-gradient-to-r from-blue-500/20 to-purple-500/20 text-blue-500 border-l-4 border-blue-500'
-                    : 'hover:bg-gray-700/50'
-                    }`}
+                  className="flex items-center gap-3 w-full px-4 py-3 rounded-2xl text-left text-sm font-medium transition-all duration-300"
+                  style={{
+                    background: isActive
+                      ? 'linear-gradient(135deg, rgba(59,130,246,0.18), rgba(139,92,246,0.18))'
+                      : 'transparent',
+                    color: isActive
+                      ? '#a78bfa'
+                      : theme === 'dark' ? 'rgba(200,200,220,0.8)' : 'rgba(40,40,60,0.8)',
+                    borderLeft: isActive ? '2px solid rgba(139,92,246,0.6)' : '2px solid transparent',
+                    animationDelay: `${i * 40}ms`
+                  }}
                 >
+                  <span className="text-base">{item.emoji}</span>
                   {item.label}
+                  {isActive && (
+                    <span className="ml-auto w-1.5 h-1.5 rounded-full bg-purple-400 animate-pulse" />
+                  )}
                 </button>
-              ))}
-            </div>
-          )}
+              );
+            })}
+
+            {/* Mobile CTA */}
+            <button
+              onClick={() => scrollToSection('contact')}
+              className="mt-2 w-full py-3 rounded-2xl text-sm font-semibold text-white transition-all duration-300 hover:scale-[1.02]"
+              style={{
+                background: 'linear-gradient(135deg, #3b82f6, #8b5cf6, #ec4899)',
+                boxShadow: '0 4px 20px rgba(139,92,246,0.35)'
+              }}
+            >
+              ✨ Let's Talk
+            </button>
+          </div>
         </div>
-      </nav>
+      </div>
 
       {/* Hero Section */}
       <section
         id="home"
-        className="min-h-screen flex items-center px-4 sm:px-6 pt-24 relative overflow-hidden"
+        className="min-h-screen flex items-center px-4 sm:px-6 pt-28 relative overflow-hidden"
         style={{
           background: theme === 'dark'
             ? 'linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #16213e 100%)'
@@ -984,12 +1213,11 @@ const Portfolio = () => {
             </p>
           </div>
 
-          <div className="grid md:grid-cols-2 gap-8">
-            {projects.map((project, index) => (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {projects.slice(0, 8).map((project, index) => (
               <div
                 key={index}
-                className={`group relative overflow-hidden rounded-2xl cursor-pointer ${project.featured ? 'md:col-span-2' : ''
-                  }`}
+                className={`group relative rounded-3xl cursor-pointer ${project.featured ? 'md:col-span-2 lg:col-span-2' : ''}`}
                 onMouseEnter={() => setHoveredProject(index)}
                 onMouseLeave={() => setHoveredProject(null)}
                 onClick={() => {
@@ -997,60 +1225,103 @@ const Portfolio = () => {
                   setCurrentScreenshotIndex(0);
                 }}
               >
-                <div className={`absolute inset-0 bg-gradient-to-br from-blue-500/20 via-purple-500/20 to-pink-500/20 opacity-0 group-hover:opacity-100 transition-all duration-500 rounded-2xl`} />
+                {/* Subtle animated background glow on hover */}
+                <div className="absolute -inset-1 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 rounded-3xl opacity-0 group-hover:opacity-25 blur-xl transition-all duration-700" />
+                
+                <div 
+                  className="relative h-full flex flex-col rounded-3xl overflow-hidden transition-all duration-500 group-hover:-translate-y-2 group-hover:shadow-[0_20px_40px_-15px_rgba(0,0,0,0.5)]"
+                  style={{
+                    background: theme === 'dark' 
+                      ? 'rgba(20, 20, 30, 0.4)' 
+                      : 'rgba(255, 255, 255, 0.6)',
+                    backdropFilter: 'blur(20px)',
+                    WebkitBackdropFilter: 'blur(20px)',
+                    border: theme === 'dark' 
+                      ? '1px solid rgba(255, 255, 255, 0.08)' 
+                      : '1px solid rgba(0, 0, 0, 0.08)',
+                  }}
+                >
+                  {/* Top glass reflection line */}
+                  <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 z-20" />
 
-                <div className={`relative overflow-hidden rounded-2xl ${cardClass
-                  } border ${borderClass} shadow-xl group-hover:shadow-2xl transition-all duration-500`}>
-                  <div className="relative overflow-hidden h-64">
+                  <div className="relative overflow-hidden h-48 sm:h-56 w-full shrink-0">
                     <img
                       src={project.image}
                       alt={project.title}
-                      className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700"
+                      className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700 ease-out"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-gray-900 via-gray-900/50 to-transparent" />
-
+                    <div className="absolute inset-0 bg-gradient-to-t from-gray-900/90 via-gray-900/40 to-transparent" />
+                    
+                    {/* Badge */}
                     {project.featured && (
-                      <div className="absolute top-4 left-4">
-                        <span className="px-3 py-1 rounded-full bg-gradient-to-r from-blue-500 to-purple-600 text-white text-sm font-medium">
+                      <div className="absolute top-3 left-3 z-10">
+                        <span className="px-2.5 py-1.5 rounded-full bg-gradient-to-r from-blue-600/90 to-purple-600/90 text-white text-[10px] font-bold tracking-widest uppercase backdrop-blur-md shadow-lg border border-white/20">
                           En vedette
                         </span>
                       </div>
                     )}
+
+                    {/* Quick view text overlay on hover */}
+                    <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-10">
+                      <span className="px-5 py-2.5 rounded-full bg-black/60 text-white/95 text-sm font-medium backdrop-blur-md border border-white/20 flex items-center gap-2 transform translate-y-4 group-hover:translate-y-0 transition-all duration-500 shadow-xl">
+                        <Search size={16} /> Voir les images
+                      </span>
+                    </div>
                   </div>
 
-                  <div className="p-8">
-                    <div className="flex justify-between items-start mb-4">
-                      <h3 className="text-2xl font-semibold group-hover:text-blue-400 transition-colors">
+                  <div className="p-5 sm:p-6 flex flex-col flex-grow relative z-10">
+                    <div className="flex justify-between items-start gap-4 mb-3">
+                      <h3 className={`text-xl font-bold tracking-tight transition-all duration-500 ${
+                        theme === 'dark' 
+                          ? 'text-gray-100 group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-blue-400 group-hover:to-purple-400' 
+                          : 'text-gray-900 group-hover:text-blue-600'
+                      }`}>
                         {project.title}
                       </h3>
-                      <div className="flex gap-3">
+                      
+                      {/* Action Links */}
+                      <div className="flex gap-2 shrink-0 mt-1">
                         <a
                           href={project.github}
-                          className="p-2 rounded-lg bg-gray-700/50 hover:bg-gray-700 transition-all duration-300 hover:scale-110"
+                          onClick={(e) => e.stopPropagation()}
+                          className={`flex items-center justify-center w-10 h-10 rounded-full transition-all duration-300 hover:scale-110 shadow-sm ${
+                            theme === 'dark' 
+                              ? 'bg-white/5 hover:bg-white/10 text-gray-400 hover:text-white border border-white/5 hover:border-white/20' 
+                              : 'bg-black/5 hover:bg-black/10 text-gray-600 hover:text-gray-900 border border-black/5 hover:border-black/20'
+                          }`}
                         >
-                          <Github size={20} />
+                          <Github size={18} />
                         </a>
-                        <a
-                          href={project.live}
-                          className="p-2 rounded-lg bg-gray-700/50 hover:bg-gray-700 transition-all duration-300 hover:scale-110"
+                        <button
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            setSelectedProjectScreenshots(project.screenshots);
+                            setCurrentScreenshotIndex(0);
+                          }}
+                          className={`flex items-center justify-center w-10 h-10 rounded-full transition-all duration-300 hover:scale-110 shadow-sm ${
+                            theme === 'dark' 
+                              ? 'bg-white/5 hover:bg-white/10 text-gray-400 hover:text-white border border-white/5 hover:border-white/20' 
+                              : 'bg-black/5 hover:bg-black/10 text-gray-600 hover:text-gray-900 border border-black/5 hover:border-black/20'
+                          }`}
                         >
-                          <ExternalLink size={20} />
-                        </a>
+                          <ExternalLink size={18} />
+                        </button>
                       </div>
                     </div>
 
-                    <p className={`mb-6 ${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'} leading-relaxed`}>
+                    <p className={`text-sm sm:text-base leading-relaxed mb-8 flex-grow ${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'}`}>
                       {project.description}
                     </p>
 
-                    <div className="flex flex-wrap gap-2">
+                    <div className="flex flex-wrap gap-2 mt-auto">
                       {project.tech.map((tech) => (
                         <span
                           key={tech}
-                          className={`px-4 py-2 text-sm rounded-full border ${theme === 'dark'
-                            ? 'border-gray-700 bg-gray-800/50 text-gray-300'
-                            : 'border-gray-300 bg-gray-100 text-gray-700'
-                            } group-hover:border-blue-500/50 transition-all duration-300`}
+                          className={`px-3 py-1.5 text-[11px] sm:text-xs font-semibold tracking-wide uppercase rounded-lg transition-colors duration-300 ${
+                            theme === 'dark'
+                              ? 'bg-white/5 border border-white/10 text-gray-300 group-hover:border-white/20 group-hover:bg-white/10'
+                              : 'bg-black/5 border border-black/10 text-gray-700 group-hover:border-black/20 group-hover:bg-black/10'
+                          }`}
                         >
                           {tech}
                         </span>
@@ -1156,7 +1427,7 @@ const Portfolio = () => {
         </div>
       </section>
 
-      {/* Experience Timeline */}
+      {/* Eduction Timeline */}
       <section id="experience" className={`py-24 px-4 ${theme === 'dark' ? 'bg-gray-900/50' : 'bg-gray-100/50'} relative`}>
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-16">
