@@ -30,7 +30,10 @@ import {
   ArrowLeft,
   Send,
   AlertCircle,
-  Loader2
+  Loader2,
+  Briefcase,
+  Building2,
+  Calendar
 } from "lucide-react";
 
 import profileImg from "./assets/image/cv.avif";
@@ -40,8 +43,7 @@ import formation2 from "./assets/image/F5.png";
 import formation3 from "./assets/image/F2.png";
 import formation4 from "./assets/image/F3.png";
 import formation5 from "./assets/image/F1.png";
-import formation6 from "./assets/image/F1.png";
-import formation7 from "./assets/image/F6.png";
+import formation6 from "./assets/image/F6.png";
 
 // Project 1 Images
 import Mobile1 from "./assets/image/Mobile1.jpg";
@@ -107,6 +109,10 @@ import projet7_4 from "./assets/image/projet7_4.jpeg";
 import projet7_5 from "./assets/image/projet7_5.jpeg";
 import projet7_8 from "./assets/image/projet7_8.jpeg";
 
+// Professional Experience Logos
+import logoAGH from "./assets/image/Logoa_AGH.webp";
+import logoMD from "./assets/image/Logo_M§D.png";
+
 const Portfolio = () => {
   const [theme, setTheme] = useState('dark');
   const [activeSection, setActiveSection] = useState('home');
@@ -114,7 +120,6 @@ const Portfolio = () => {
   const [formData, setFormData] = useState({ name: '', email: '', message: '', 'bot-field': '' });
   const [formStatus, setFormStatus] = useState({ type: '', message: '' });
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [hoveredProject, setHoveredProject] = useState(null);
   const [selectedFormation, setSelectedFormation] = useState(null);
   const [selectedProjectScreenshots, setSelectedProjectScreenshots] = useState(null);
   const [currentScreenshotIndex, setCurrentScreenshotIndex] = useState(0);
@@ -124,7 +129,7 @@ const Portfolio = () => {
 
   useEffect(() => {
     const handleScroll = () => {
-      const sections = ['home', 'about', 'skills', 'projects', 'formation', 'experience', 'contact'];
+      const sections = ['home', 'about', 'skills', 'pro-experience', 'projects', 'experience', 'formation', 'contact'];
       const current = sections.find(section => {
         const element = document.getElementById(section);
         if (element) {
@@ -184,7 +189,7 @@ const Portfolio = () => {
         setFormStatus({ type: 'success', message: 'Message envoyé avec succès ! 🎉 Je vous répondrai bientôt.' });
         setFormData({ name: '', email: '', message: '', 'bot-field': '' });
       })
-      .catch((error) => {
+      .catch(() => {
         setFormStatus({ type: 'error', message: "Une erreur s'est produite lors de l'envoi. Veuillez réessayer." });
       })
       .finally(() => {
@@ -193,7 +198,59 @@ const Portfolio = () => {
       });
   };
 
-  // ===== البيانات المحدّثة =====
+  // ===== Données Expérience Professionnelle (Stages) =====
+
+  const professionalExperiences = [
+    {
+      id: 1,
+      role: 'Stagiaire - Développement Mobile Flutter & Test/Debug',
+      company: 'AGH Data Agency Holding SA',
+      logo: logoAGH,
+      period: '01/06/2026 – 02/07/2026',
+      duration: '1 Mois',
+      domain: 'Développement Mobile Flutter',
+      accentColor: 'from-blue-500 via-cyan-400 to-indigo-500',
+      glowColor: 'group-hover:shadow-cyan-500/20',
+      badgeGradient: 'from-cyan-500/20 to-blue-500/20 text-cyan-300 border-cyan-500/30',
+      stack: [
+        { name: 'Flutter/Dart', color: 'bg-cyan-500/10 text-cyan-400 border-cyan-500/30' },
+        { name: 'Django', color: 'bg-emerald-500/10 text-emerald-400 border-emerald-500/30' },
+        { name: 'FastAPI (LLM)', color: 'bg-teal-500/10 text-teal-300 border-teal-500/30' },
+        { name: 'PostgreSQL', color: 'bg-blue-500/10 text-blue-400 border-blue-500/30' },
+        { name: 'SonarCloud', color: 'bg-orange-500/10 text-orange-400 border-orange-500/30' }
+      ],
+      achievements: [
+        'Développement d\'applications Flutter en production avec architecture réactive.',
+        'Intégration d\'APIs REST avec des backends Django/DRF et microservices FastAPI basés sur des LLM.',
+        'Test et débogage rigoureux des applications selon les standards de qualité SonarCloud.'
+      ]
+    },
+    {
+      id: 2,
+      role: 'Stagiaire - Développement Web Full-Stack',
+      company: 'Migrations & Développement (M&D)',
+      logo: logoMD,
+      period: '05/07/2026 – 30/09/2026',
+      duration: '3 Mois',
+      domain: 'Web Full-Stack & DevOps',
+      accentColor: 'from-purple-500 via-pink-500 to-amber-500',
+      glowColor: 'group-hover:shadow-purple-500/20',
+      badgeGradient: 'from-purple-500/20 to-pink-500/20 text-pink-300 border-pink-500/30',
+      stack: [
+        { name: 'React 19/TypeScript', color: 'bg-blue-500/10 text-blue-400 border-blue-500/30' },
+        { name: 'Fastify (Node.js)', color: 'bg-green-500/10 text-green-400 border-green-500/30' },
+        { name: 'PostgreSQL/Prisma', color: 'bg-purple-500/10 text-purple-300 border-purple-500/30' },
+        { name: 'Docker', color: 'bg-sky-500/10 text-sky-400 border-sky-500/30' },
+        { name: 'Git/GitHub', color: 'bg-red-500/10 text-red-400 border-red-500/30' },
+        { name: 'CI/CD', color: 'bg-amber-500/10 text-amber-400 border-amber-500/30' }
+      ],
+      achievements: [
+        'Prise en charge complète et autonome du projet : conception et développement frontend (React/TS) et backend (Fastify/Prisma).',
+        'Mise en place du versioning Git/GitHub et d\'un pipeline CI/CD pour automatiser les déploiements.',
+        'Tests, débogage et maintenance continue de l\'application tout au long du cycle de développement.'
+      ]
+    }
+  ];
 
   const formations = [
     {
@@ -241,7 +298,7 @@ const Portfolio = () => {
       title: 'Apprentissage Automatique avec Python',
       issuer: 'IBM SkillsBuild',
       date: 'Mars 2026',
-      image: formation7,
+      image: formation6,
       skills: ['Machine Learning', 'Python', 'Data Science', 'IBM']
     },
   ];
@@ -350,13 +407,13 @@ const Portfolio = () => {
       screenshots: [BI1, BI2, BI3, BI4]
     },
     {
-      title: 'Student Management System',
-      description: 'Developed a full-stack web application designed as a comprehensive academic management portal for students and teachers.',
-      tech: ['React', 'Node.js', 'MySQL', 'JWT'],
-      image: projet5_1,
+      title: 'Smart Fishing Management',
+      description: 'Platform Designed for modern fishing fleet management. Monitor vessel vitals, track resources, and manage mission logistics with surgical precision.',
+      tech: ['React', 'Node.js', 'MySQL', 'Recharts'],
+      image: projet7_1,
       github: 'https://github.com/OUABEN',
       live: '#',
-      screenshots: [projet5_1, projet5_2, projet5_3, projet5_4, projet5_5, projet5_6]
+      screenshots: [projet7_1, projet7_2, projet7_3, projet7_4, projet7_5, projet7_8]
     },
     {
       title: 'LHANOUT - Inventory Management',
@@ -368,13 +425,13 @@ const Portfolio = () => {
       screenshots: [projet8_1, projet8_2, projet8_3, projet8_4, projet8_5, projet8_6, projet8_7, projet8_8, projet8_9]
     },
     {
-      title: 'Smart Fishing Management',
-      description: 'Platform Designed for modern fishing fleet management. Monitor vessel vitals, track resources, and manage mission logistics with surgical precision.',
-      tech: ['React', 'Node.js', 'MySQL', 'Recharts'],
-      image: projet7_1,
+      title: 'Student Management System',
+      description: 'Developed a full-stack web application designed as a comprehensive academic management portal for students and teachers.',
+      tech: ['React', 'Node.js', 'MySQL', 'JWT'],
+      image: projet5_1,
       github: 'https://github.com/OUABEN',
       live: '#',
-      screenshots: [projet7_1, projet7_2, projet7_3, projet7_4, projet7_5, projet7_8]
+      screenshots: [projet5_1, projet5_2, projet5_3, projet5_4, projet5_5, projet5_6]
     }
   ];
 
@@ -415,10 +472,8 @@ const Portfolio = () => {
 
   const bgClass = theme === 'dark' ? 'bg-gray-900' : 'bg-gray-50';
   const textClass = theme === 'dark' ? 'text-gray-100' : 'text-gray-900';
-  const cardClass = theme === 'dark' ? 'bg-gray-800/50 backdrop-blur-sm' : 'bg-white/80 backdrop-blur-sm';
-  const borderClass = theme === 'dark' ? 'border-gray-700/50' : 'border-gray-200/50';
 
-  const FormationModal = () => {
+  const renderFormationModal = () => {
     if (!selectedFormation) return null;
 
     return (
@@ -444,7 +499,7 @@ const Portfolio = () => {
     );
   };
 
-  const ProjectModal = () => {
+  const renderProjectModal = () => {
     if (!selectedProjectScreenshots) return null;
 
     const screenshots = selectedProjectScreenshots;
@@ -517,7 +572,9 @@ const Portfolio = () => {
     );
   };
 
-  const AllProjectsView = () => {
+  const renderAllProjectsView = () => {
+    const categories = ['All', 'React', 'Kotlin', 'Node.js', 'Python', 'Power BI'];
+
     const filteredProjects = projects.filter(project => {
       const matchesSearch = project.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
         project.description.toLowerCase().includes(searchQuery.toLowerCase());
@@ -525,188 +582,249 @@ const Portfolio = () => {
       return matchesSearch && matchesFilter;
     });
 
-    const categories = ['All', 'React', 'Kotlin', 'Node.js', 'Python', 'Power BI'];
+    const projectPalette = [
+      { from: '#06b6d4', to: '#3b82f6', glow: 'rgba(6,182,212,0.25)' },
+      { from: '#a855f7', to: '#ec4899', glow: 'rgba(168,85,247,0.25)' },
+      { from: '#3b82f6', to: '#6366f1', glow: 'rgba(59,130,246,0.25)' },
+      { from: '#10b981', to: '#06b6d4', glow: 'rgba(168,85,247,0.25)' },
+      { from: '#f97316', to: '#eab308', glow: 'rgba(249,115,22,0.25)' },
+      { from: '#8b5cf6', to: '#d946ef', glow: 'rgba(139,92,246,0.25)' },
+      { from: '#ec4899', to: '#f43f5e', glow: 'rgba(236,72,153,0.25)' },
+      { from: '#06b6d4', to: '#10b981', glow: 'rgba(6,182,212,0.25)' },
+    ];
 
     return (
-      <div className={`min-h-screen pt-24 pb-20 ${bgClass} animate-in fade-in duration-700`}>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className={`min-h-screen pt-28 pb-24 relative overflow-hidden ${theme === 'dark' ? 'bg-gradient-to-b from-[#090910] via-[#0d0d1a] to-gray-900' : 'bg-gradient-to-b from-gray-50 via-slate-100/60 to-gray-50'}`}>
+        {/* Ambient Glows */}
+        <div className="absolute top-0 left-1/4 w-[600px] h-[600px] bg-blue-600/8 rounded-full blur-[160px] pointer-events-none" />
+        <div className="absolute bottom-0 right-1/4 w-[600px] h-[600px] bg-purple-600/8 rounded-full blur-[160px] pointer-events-none" />
+
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           {/* Header */}
-          <div className="flex flex-col md:flex-row md:items-center justify-between mb-12 gap-6">
+          <div className="flex flex-col lg:flex-row lg:items-end justify-between mb-16 gap-8">
             <div>
               <button
-                onClick={() => setShowAllProjects(false)}
-                className="flex items-center gap-2 text-blue-500 hover:text-blue-400 mb-4 transition-colors group"
+                onClick={() => {
+                  setShowAllProjects(false);
+                  setTimeout(() => scrollToSection('projects'), 50);
+                }}
+                className="inline-flex items-center gap-2 px-4 py-2 mb-6 rounded-full border backdrop-blur-xl transition-all duration-300 hover:scale-105 group cursor-pointer"
+                style={{
+                  background: theme === 'dark' ? 'rgba(255,255,255,0.05)' : 'rgba(0,0,0,0.05)',
+                  borderColor: theme === 'dark' ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.1)',
+                }}
               >
-                <ArrowLeft size={20} className="group-hover:-translate-x-1 transition-transform" />
-                Retour au Portfolio
+                <ArrowLeft size={16} className="text-blue-400 group-hover:-translate-x-1 transition-transform" />
+                <span className="text-xs font-bold tracking-wide text-gray-300">Retour au Portfolio</span>
               </button>
-              <h1 className="text-4xl md:text-6xl font-bold bg-gradient-to-r from-white via-blue-400 to-purple-500 bg-clip-text text-transparent">
+
+              <div
+                className="inline-flex items-center gap-2 px-4 py-1.5 mb-3 rounded-full border backdrop-blur-xl block w-fit"
+                style={{ background: 'rgba(139,92,246,0.08)', borderColor: 'rgba(139,92,246,0.25)' }}
+              >
+                <Briefcase className="w-3.5 h-3.5 text-purple-400" />
+                <span className="text-[11px] font-bold tracking-widest uppercase text-purple-400">Catalogue Complet</span>
+              </div>
+
+              <h1
+                className="text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight"
+                style={{ background: 'linear-gradient(135deg, #ffffff 0%, #c4b5fd 50%, #93c5fd 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}
+              >
                 Tous les Projets
               </h1>
             </div>
 
-            <div className="flex flex-col sm:flex-row gap-4">
+            {/* Filters & Search */}
+            <div className="flex flex-col sm:flex-row gap-3.5 items-stretch sm:items-center">
               <div className="relative">
-                <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500" size={18} />
+                <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400" size={16} />
                 <input
                   type="text"
                   placeholder="Rechercher un projet..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className={`pl-10 pr-4 py-3 rounded-xl border ${borderClass} ${theme === 'dark' ? 'bg-gray-800/50' : 'bg-white'} focus:outline-none focus:ring-2 focus:ring-blue-500/50 w-full sm:w-64`}
+                  className={`pl-10 pr-4 py-2.5 rounded-2xl text-xs sm:text-sm font-medium border transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-purple-500/40 w-full sm:w-64 backdrop-blur-xl ${
+                    theme === 'dark'
+                      ? 'bg-white/5 border-white/10 text-gray-100 placeholder-gray-500 focus:border-purple-500/50'
+                      : 'bg-white/80 border-black/10 text-gray-900 placeholder-gray-400 focus:border-purple-500'
+                  }`}
                 />
               </div>
-              <div className="flex gap-2 overflow-x-auto pb-2 sm:pb-0 scrollbar-hide">
-                {categories.map(cat => (
-                  <button
-                    key={cat}
-                    onClick={() => setFilterCategory(cat)}
-                    className={`px-4 py-2 rounded-full text-sm font-medium transition-all whitespace-nowrap ${filterCategory === cat
-                      ? 'bg-blue-600 text-white shadow-lg shadow-blue-500/30'
-                      : `${theme === 'dark' ? 'bg-gray-800 text-gray-400 hover:bg-gray-700' : 'bg-gray-200 text-gray-600 hover:bg-gray-300'}`
+
+              <div className="flex gap-1.5 overflow-x-auto pb-1 sm:pb-0 scrollbar-hide">
+                {categories.map(cat => {
+                  const isActive = filterCategory === cat;
+                  return (
+                    <button
+                      key={cat}
+                      onClick={() => setFilterCategory(cat)}
+                      className={`px-4 py-2 rounded-xl text-xs font-bold transition-all duration-300 whitespace-nowrap border ${
+                        isActive
+                          ? 'bg-gradient-to-r from-blue-600 to-purple-600 text-white border-transparent shadow-lg shadow-purple-500/25 scale-105'
+                          : theme === 'dark'
+                            ? 'bg-white/5 text-gray-400 border-white/10 hover:bg-white/10 hover:text-white'
+                            : 'bg-black/5 text-gray-600 border-black/10 hover:bg-black/10 hover:text-gray-900'
                       }`}
-                  >
-                    {cat}
-                  </button>
-                ))}
+                    >
+                      {cat}
+                    </button>
+                  );
+                })}
               </div>
             </div>
           </div>
 
           {/* Grid */}
           {filteredProjects.length > 0 ? (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-              {filteredProjects.map((project, index) => (
-                <div
-                  key={index}
-                  className="group relative rounded-3xl cursor-pointer"
-                  onClick={() => {
-                    setSelectedProjectScreenshots(project.screenshots);
-                    setCurrentScreenshotIndex(0);
-                  }}
-                >
-                  {/* Subtle animated background glow on hover */}
-                  <div className="absolute -inset-1 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 rounded-3xl opacity-0 group-hover:opacity-25 blur-xl transition-all duration-700" />
-                  
-                  <div 
-                    className="relative h-full flex flex-col rounded-3xl overflow-hidden transition-all duration-500 group-hover:-translate-y-2 group-hover:shadow-[0_20px_40px_-15px_rgba(0,0,0,0.5)]"
-                    style={{
-                      background: theme === 'dark' 
-                        ? 'rgba(20, 20, 30, 0.4)' 
-                        : 'rgba(255, 255, 255, 0.6)',
-                      backdropFilter: 'blur(20px)',
-                      WebkitBackdropFilter: 'blur(20px)',
-                      border: theme === 'dark' 
-                        ? '1px solid rgba(255, 255, 255, 0.08)' 
-                        : '1px solid rgba(0, 0, 0, 0.08)',
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {filteredProjects.map((project, index) => {
+                const clr = projectPalette[index % projectPalette.length];
+                return (
+                  <div
+                    key={index}
+                    className="group relative rounded-3xl cursor-pointer transition-all duration-500 hover:-translate-y-2 flex flex-col"
+                    onClick={() => {
+                      setSelectedProjectScreenshots(project.screenshots);
+                      setCurrentScreenshotIndex(0);
                     }}
                   >
-                    {/* Top glass reflection line */}
-                    <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 z-20" />
+                    {/* Outer hover ring */}
+                    <div
+                      className="absolute -inset-px rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
+                      style={{
+                        border: `1px solid ${clr.from}60`,
+                        background: `linear-gradient(135deg, ${clr.from}15, ${clr.to}15)`,
+                      }}
+                    />
 
-                    <div className="relative overflow-hidden h-40 sm:h-48 w-full shrink-0">
-                      <img
-                        src={project.image}
-                        alt={project.title}
-                        className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700 ease-out"
+                    {/* Card Body */}
+                    <div
+                      className="relative w-full h-full flex flex-col justify-between rounded-3xl overflow-hidden"
+                      style={{
+                        background: theme === 'dark' ? 'rgba(10,10,22,0.75)' : 'rgba(255,255,255,0.92)',
+                        backdropFilter: 'blur(28px)',
+                        border: theme === 'dark' ? '1px solid rgba(255,255,255,0.07)' : '1px solid rgba(0,0,0,0.06)',
+                        boxShadow: `0 20px 50px rgba(0,0,0,${theme === 'dark' ? '0.4' : '0.08'}), inset 0 1px 0 rgba(255,255,255,0.05)`,
+                      }}
+                    >
+                      {/* Top accent bar */}
+                      <div
+                        className="absolute top-0 left-6 right-6 h-0.5 rounded-full opacity-60 group-hover:opacity-100 transition-opacity duration-500 z-20"
+                        style={{ background: `linear-gradient(to right, ${clr.from}, ${clr.to})` }}
                       />
-                      <div className="absolute inset-0 bg-gradient-to-t from-gray-900/90 via-gray-900/40 to-transparent" />
-                      
-                      {/* Badge */}
-                      {project.featured && (
-                        <div className="absolute top-3 left-3 z-10">
-                          <span className="px-2.5 py-1 rounded-full bg-gradient-to-r from-blue-600/90 to-purple-600/90 text-white text-[9px] font-bold tracking-widest uppercase backdrop-blur-md shadow-lg border border-white/20">
-                            En vedette
-                          </span>
-                        </div>
-                      )}
 
-                      {/* Quick view text overlay on hover */}
-                      <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-10">
-                        <span className="px-4 py-2 rounded-full bg-black/60 text-white/95 text-xs font-medium backdrop-blur-md border border-white/20 flex items-center gap-1.5 transform translate-y-4 group-hover:translate-y-0 transition-all duration-500 shadow-xl">
-                          <Search size={14} /> Voir images
-                        </span>
-                      </div>
-                    </div>
-
-                    <div className="p-4 sm:p-5 flex flex-col flex-grow relative z-10">
-                      <div className="flex justify-between items-start gap-2 mb-2">
-                        <h3 className={`text-xl font-bold tracking-tight line-clamp-1 transition-all duration-500 ${
-                          theme === 'dark' 
-                            ? 'text-gray-100 group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-blue-400 group-hover:to-purple-400' 
-                            : 'text-gray-900 group-hover:text-blue-600'
-                        }`}>
-                          {project.title}
-                        </h3>
-                        
-                        {/* Action Links */}
-                        <div className="flex gap-1.5 shrink-0 mt-0.5">
-                          <a
-                            href={project.github}
-                            onClick={(e) => e.stopPropagation()}
-                            className={`flex items-center justify-center w-8 h-8 rounded-full transition-all duration-300 hover:scale-110 shadow-sm ${
-                              theme === 'dark' 
-                                ? 'bg-white/5 hover:bg-white/10 text-gray-400 hover:text-white border border-white/5 hover:border-white/20' 
-                                : 'bg-black/5 hover:bg-black/10 text-gray-600 hover:text-gray-900 border border-black/5 hover:border-black/20'
-                            }`}
-                          >
-                            <Github size={14} />
-                          </a>
-                          <button
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              setSelectedProjectScreenshots(project.screenshots);
-                              setCurrentScreenshotIndex(0);
-                            }}
-                            className={`flex items-center justify-center w-8 h-8 rounded-full transition-all duration-300 hover:scale-110 shadow-sm ${
-                              theme === 'dark' 
-                                ? 'bg-white/5 hover:bg-white/10 text-gray-400 hover:text-white border border-white/5 hover:border-white/20' 
-                                : 'bg-black/5 hover:bg-black/10 text-gray-600 hover:text-gray-900 border border-black/5 hover:border-black/20'
-                            }`}
-                          >
-                            <ExternalLink size={14} />
-                          </button>
-                        </div>
+                      {/* Shimmer sweep */}
+                      <div className="absolute inset-0 pointer-events-none overflow-hidden rounded-3xl z-20">
+                        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/[0.04] to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-[1200ms] ease-out" />
                       </div>
 
-                      <p className={`text-xs sm:text-sm line-clamp-2 leading-relaxed mb-6 flex-grow ${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'}`}>
-                        {project.description}
-                      </p>
+                      <div>
+                        {/* Image Header */}
+                        <div className="relative h-48 sm:h-52 overflow-hidden w-full shrink-0">
+                          <img
+                            src={project.image}
+                            alt={project.title}
+                            className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700 ease-out"
+                          />
+                          <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/40 to-transparent" />
 
-                      <div className="flex flex-wrap gap-1.5 mt-auto">
-                        {project.tech.slice(0, 3).map((tech) => (
-                          <span
-                            key={tech}
-                            className={`px-2.5 py-1 text-[9px] sm:text-[10px] font-semibold tracking-wide uppercase rounded-md transition-colors duration-300 ${
-                              theme === 'dark'
-                                ? 'bg-white/5 border border-white/10 text-gray-300 group-hover:border-white/20 group-hover:bg-white/10'
-                                : 'bg-black/5 border border-black/10 text-gray-700 group-hover:border-black/20 group-hover:bg-black/10'
-                            }`}
-                          >
-                            {tech}
-                          </span>
-                        ))}
-                        {project.tech.length > 3 && (
-                           <span className={`px-2.5 py-1 text-[9px] sm:text-[10px] font-semibold tracking-wide uppercase rounded-md transition-colors duration-300 ${
-                            theme === 'dark'
-                              ? 'bg-transparent text-gray-500'
-                              : 'bg-transparent text-gray-400'
-                          }`}>
-                             +{project.tech.length - 3}
-                           </span>
-                        )}
+                          {/* Featured Badge */}
+                          {project.featured && (
+                            <div className="absolute top-4 left-4 z-10">
+                              <span
+                                className="px-3 py-1 rounded-full text-white text-[10px] font-extrabold tracking-widest uppercase backdrop-blur-md shadow-lg border border-white/20"
+                                style={{ background: 'linear-gradient(135deg, rgba(59,130,246,0.9), rgba(168,85,247,0.9))' }}
+                              >
+                                En vedette
+                              </span>
+                            </div>
+                          )}
+
+                          {/* Quick view text overlay on hover */}
+                          <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-10">
+                            <span className="px-4 py-2 rounded-full bg-black/70 text-white text-xs font-bold backdrop-blur-md border border-white/20 flex items-center gap-2 transform translate-y-3 group-hover:translate-y-0 transition-all duration-300 shadow-xl">
+                              <Search size={14} className="text-purple-300" /> Voir images
+                            </span>
+                          </div>
+                        </div>
+
+                        {/* Content */}
+                        <div className="p-6">
+                          <div className="flex justify-between items-start gap-3 mb-3">
+                            <h3
+                              className="text-lg sm:text-xl font-extrabold leading-snug tracking-tight transition-colors duration-300 group-hover:text-blue-400 line-clamp-1"
+                              style={{ color: theme === 'dark' ? '#f1f5f9' : '#0f172a' }}
+                            >
+                              {project.title}
+                            </h3>
+
+                            {/* Action links */}
+                            <div className="flex gap-1.5 shrink-0">
+                              <a
+                                href={project.github}
+                                onClick={(e) => e.stopPropagation()}
+                                className={`flex items-center justify-center w-8 h-8 rounded-full transition-all duration-300 hover:scale-110 border ${
+                                  theme === 'dark'
+                                    ? 'bg-white/5 hover:bg-white/10 text-gray-300 border-white/10'
+                                    : 'bg-black/5 hover:bg-black/10 text-gray-700 border-black/10'
+                                }`}
+                              >
+                                <Github size={14} />
+                              </a>
+                              <button
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  setSelectedProjectScreenshots(project.screenshots);
+                                  setCurrentScreenshotIndex(0);
+                                }}
+                                className={`flex items-center justify-center w-8 h-8 rounded-full transition-all duration-300 hover:scale-110 border ${
+                                  theme === 'dark'
+                                    ? 'bg-white/5 hover:bg-white/10 text-gray-300 border-white/10'
+                                    : 'bg-black/5 hover:bg-black/10 text-gray-700 border-black/10'
+                                }`}
+                              >
+                                <ExternalLink size={14} />
+                              </button>
+                            </div>
+                          </div>
+
+                          <p className={`text-xs sm:text-sm leading-relaxed mb-5 line-clamp-2 ${theme === 'dark' ? 'text-gray-300' : 'text-gray-600'}`}>
+                            {project.description}
+                          </p>
+                        </div>
+                      </div>
+
+                      {/* Tech stack */}
+                      <div className="px-6 pb-6 pt-0">
+                        <div className={`pt-4 border-t ${theme === 'dark' ? 'border-white/8' : 'border-gray-100'}`}>
+                          <div className="flex flex-wrap gap-1.5">
+                            {project.tech.map((tech, tIdx) => (
+                              <span
+                                key={tIdx}
+                                className="px-2.5 py-1 text-[11px] font-semibold rounded-lg border transition-all duration-200 hover:scale-105"
+                                style={{
+                                  background: `linear-gradient(135deg, ${clr.from}14, ${clr.to}14)`,
+                                  borderColor: `${clr.from}40`,
+                                  color: theme === 'dark' ? '#f1f5f9' : '#0f172a',
+                                }}
+                              >
+                                {tech}
+                              </span>
+                            ))}
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
-              ))}
+                );
+              })}
             </div>
           ) : (
-            <div className="text-center py-20">
-              <div className="inline-block p-6 rounded-full bg-gray-800/50 mb-6">
-                <Search size={48} className="text-gray-600" />
+            <div className="text-center py-24">
+              <div className="inline-flex p-6 rounded-full bg-white/5 border border-white/10 mb-6">
+                <Search size={40} className="text-gray-400" />
               </div>
-              <h3 className="text-2xl font-bold mb-2">Aucun projet trouvé</h3>
+              <h3 className="text-2xl font-bold mb-2 text-gray-200">Aucun projet trouvé</h3>
               <p className="text-gray-400">Essayez de modifier vos critères de recherche ou de filtre.</p>
             </div>
           )}
@@ -718,7 +836,7 @@ const Portfolio = () => {
   if (showAllProjects) {
     return (
       <div className={`min-h-screen ${bgClass} ${textClass} transition-colors duration-500`}>
-        <ProjectModal />
+        {renderProjectModal()}
         {/* ── All-Projects floating pill navbar ── */}
         <div className="fixed top-4 left-1/2 -translate-x-1/2 z-50 w-[calc(100%-2rem)] max-w-2xl">
           <nav
@@ -746,15 +864,15 @@ const Portfolio = () => {
             </button>
           </nav>
         </div>
-        <AllProjectsView />
+        {renderAllProjectsView()}
       </div>
     );
   }
 
   return (
     <div className={`min-h-screen ${bgClass} ${textClass} transition-colors duration-500`}>
-      <FormationModal />
-      <ProjectModal />
+      {renderFormationModal()}
+      {renderProjectModal()}
       {/* ── Premium Floating Glassmorphism Navbar ── */}
       <div className="fixed top-4 left-1/2 -translate-x-1/2 z-50 w-[calc(100%-2rem)] max-w-5xl px-0">
         <nav
@@ -788,13 +906,14 @@ const Portfolio = () => {
           {/* ── Desktop Nav Links ── */}
           <div className="hidden md:flex items-center gap-1">
             {[
-              { id: 'home',       label: 'Home' },
-              { id: 'about',      label: 'About' },
-              { id: 'skills',     label: 'Skills' },
-              { id: 'projects',   label: 'Projects' },
-              { id: 'formation',  label: 'Certifications' },
+              { id: 'home', label: 'Home' },
+              { id: 'about', label: 'About' },
+              { id: 'skills', label: 'Skills' },
+              { id: 'pro-experience', label: 'Expériences' },
+              { id: 'projects', label: 'Projects' },
               { id: 'experience', label: 'Éducation' },
-              { id: 'contact',    label: 'Contact' },
+              { id: 'formation', label: 'Certifications' },
+              { id: 'contact', label: 'Contact' },
             ].map((item) => {
               const isActive = activeSection === item.id;
               return (
@@ -828,9 +947,8 @@ const Portfolio = () => {
                   <span className="relative z-10">{item.label}</span>
                   {/* animated underline */}
                   <span
-                    className={`absolute bottom-0.5 left-1/2 -translate-x-1/2 h-px bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 transition-all duration-300 rounded-full ${
-                      isActive ? 'w-3/5 opacity-80' : 'w-0 opacity-0 group-hover:w-3/5 group-hover:opacity-60'
-                    }`}
+                    className={`absolute bottom-0.5 left-1/2 -translate-x-1/2 h-px bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 transition-all duration-300 rounded-full ${isActive ? 'w-3/5 opacity-80' : 'w-0 opacity-0 group-hover:w-3/5 group-hover:opacity-60'
+                      }`}
                   />
                 </button>
               );
@@ -927,13 +1045,14 @@ const Portfolio = () => {
             }}
           >
             {[
-              { id: 'home',       label: 'Home' },
-              { id: 'about',      label: 'About' },
-              { id: 'skills',     label: 'Skills' },
-              { id: 'projects',   label: 'Projects' },
-              { id: 'formation',  label: 'Certifications' },
+              { id: 'home', label: 'Home' },
+              { id: 'about', label: 'About' },
+              { id: 'skills', label: 'Skills' },
+              { id: 'pro-experience', label: 'Expériences' },
+              { id: 'projects', label: 'Projects' },
               { id: 'experience', label: 'Éducation' },
-              { id: 'contact',    label: 'Contact' },
+              { id: 'formation', label: 'Certifications' },
+              { id: 'contact', label: 'Contact' },
             ].map((item, i) => {
               const isActive = activeSection === item.id;
               return (
@@ -979,192 +1098,404 @@ const Portfolio = () => {
       {/* Hero Section */}
       <section
         id="home"
-        className="min-h-screen flex items-center px-4 sm:px-6 pt-28 relative overflow-hidden"
-        style={{
-          background: theme === 'dark'
-            ? 'linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #16213e 100%)'
-            : 'linear-gradient(135deg, #f8fafc 0%, #e2e8f0 50%, #cbd5e1 100%)',
-          position: 'relative',
-          bottom: '20px'
-        }}
+        className={`min-h-screen flex items-center px-4 sm:px-6 pt-28 pb-16 relative overflow-hidden ${theme === 'dark' ? 'bg-gradient-to-b from-[#090910] via-[#0d0d1a] to-gray-900' : 'bg-gradient-to-b from-gray-50 via-slate-100/60 to-gray-50'}`}
       >
-        <div className="absolute inset-0 overflow-hidden">
-          <div className="absolute top-1/4 left-1/4 w-72 h-72 bg-purple-500/10 rounded-full blur-3xl animate-pulse" />
-          <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl animate-pulse delay-1000" />
-        </div>
+        {/* Ambient Glows */}
+        <div className="absolute top-1/4 left-10 w-96 h-96 bg-blue-600/10 rounded-full blur-[140px] pointer-events-none animate-pulse" />
+        <div className="absolute bottom-1/4 right-10 w-96 h-96 bg-purple-600/10 rounded-full blur-[140px] pointer-events-none animate-pulse delay-1000" />
 
-        <div className="max-w-7xl mx-auto grid lg:grid-cols-2 gap-12 lg:gap-20 items-center relative z-10">
+        <div className="max-w-7xl mx-auto grid lg:grid-cols-2 gap-12 lg:gap-20 items-center relative z-10 w-full">
+          {/* Profile Image Column */}
           <div className="hidden lg:flex relative justify-center order-2 lg:order-1">
             <div className="relative group">
-              <div className="absolute -inset-4 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 rounded-3xl opacity-20 blur-xl group-hover:opacity-30 transition-all duration-500" />
-              <div className="relative rounded-2xl overflow-hidden border-2 border-gray-700/50 shadow-2xl">
-                <img
-                  src={profileImg}
-                  alt="Mohamed OUABEN"
-                  className="w-[320px] h-[420px] object-cover transform group-hover:scale-105 transition-transform duration-500"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-gray-900/50 via-transparent to-transparent" />
+              {/* Outer glow */}
+              <div className="absolute -inset-2 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 rounded-3xl opacity-30 blur-2xl group-hover:opacity-60 transition-all duration-700 pointer-events-none" />
+
+              <div
+                className="relative rounded-3xl overflow-hidden p-2 transition-all duration-500 group-hover:scale-[1.02]"
+                style={{
+                  background: theme === 'dark' ? 'rgba(10,10,22,0.75)' : 'rgba(255,255,255,0.92)',
+                  backdropFilter: 'blur(28px)',
+                  border: theme === 'dark' ? '1px solid rgba(255,255,255,0.1)' : '1px solid rgba(0,0,0,0.08)',
+                  boxShadow: `0 24px 64px rgba(0,0,0,${theme === 'dark' ? '0.5' : '0.1'})`,
+                }}
+              >
+                <div className="relative rounded-2xl overflow-hidden">
+                  <img
+                    src={profileImg}
+                    alt="OUABEN Mohamed"
+                    className="w-[320px] h-[420px] object-cover transform group-hover:scale-105 transition-transform duration-700 ease-out"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+                </div>
               </div>
 
-              <div className="absolute -bottom-4 -right-4 bg-gradient-to-r from-blue-500 to-purple-600 text-white px-6 py-3 rounded-full shadow-xl flex items-center gap-2 animate-bounce-slow">
-                <Sparkles size={16} />
-                <span className="font-semibold">Disponible</span>
+              {/* Status Floating Pill */}
+              <div
+                className="absolute -bottom-4 -right-4 px-5 py-2.5 rounded-full shadow-2xl flex items-center gap-2 border backdrop-blur-xl transition-all duration-300 hover:scale-105"
+                style={{
+                  background: 'linear-gradient(135deg, rgba(59,130,246,0.9), rgba(147,51,234,0.9))',
+                  borderColor: 'rgba(255,255,255,0.25)',
+                  boxShadow: '0 10px 30px rgba(147,51,234,0.4)',
+                }}
+              >
+                <Sparkles size={16} className="text-yellow-300 animate-spin-slow" />
+                <span className="font-bold text-white text-xs sm:text-sm tracking-wide">Disponible</span>
               </div>
             </div>
           </div>
 
+          {/* Text & Stats Column */}
           <div className="text-center lg:text-left order-1 lg:order-2">
-            <h1 className="text-5xl sm:text-6xl font-bold mb-3 leading-tight relative">
+            <h1 className="text-4xl sm:text-6xl lg:text-7xl font-black mb-3 leading-tight tracking-tight">
               <span className="bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">
                 OUABEN Mohamed
               </span>
             </h1>
 
-            <div className="text-2xl sm:text-3xl lg:text-4xl font-semibold mb-4 bg-gradient-to-r from-gray-300 to-gray-500 bg-clip-text text-transparent">
+            <div className="text-2xl sm:text-3xl font-extrabold mb-5 tracking-tight text-gray-200">
               Développeur Full-Stack
             </div>
 
-            <p className="text-lg text-gray-400 max-w-xl mb-6 leading-relaxed">
-              Développeur <span className="text-blue-400 font-semibold">Full-Stack web et mobile</span>, spécialisé dans la création d’applications modernes, performantes et
-              <span className="text-purple-400 font-semibold"> bien structurées</span> avec <span className="text-pink-400 font-semibold">Laravel, Node js/React, Spring Boot</span> et <span className="text-blue-400 font-semibold">Flutter</span>.
+            <p className="text-sm sm:text-base text-gray-400 max-w-xl mb-8 leading-relaxed mx-auto lg:mx-0">
+              Développeur <span className="text-blue-400 font-semibold">Full-Stack web et mobile</span>, spécialisé dans la création d’applications modernes, performantes et{' '}
+              <span className="text-purple-400 font-semibold">bien structurées</span> avec{' '}
+              <span className="text-pink-400 font-semibold">Laravel, Node js/React, Spring Boot</span> et{' '}
+              <span className="text-blue-400 font-semibold">Flutter</span>.
             </p>
 
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-10">
-              {stats.map((stat, index) => (
-                <div key={index} className={`${cardClass} rounded-xl p-4 text-center border ${borderClass}`}>
-                  <div className="flex justify-center mb-2 text-blue-400">
-                    {stat.icon}
+            {/* Stats Cards */}
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3.5 mb-10">
+              {stats.map((stat, index) => {
+                const statGradients = [
+                  { border: 'rgba(6,182,212,0.4)', icon: 'text-cyan-400', glow: 'rgba(6,182,212,0.15)' },
+                  { border: 'rgba(168,85,247,0.4)', icon: 'text-purple-400', glow: 'rgba(168,85,247,0.15)' },
+                  { border: 'rgba(236,72,153,0.4)', icon: 'text-pink-400', glow: 'rgba(236,72,153,0.15)' },
+                  { border: 'rgba(59,130,246,0.4)', icon: 'text-blue-400', glow: 'rgba(59,130,246,0.15)' },
+                ];
+                const cfg = statGradients[index % statGradients.length];
+
+                return (
+                  <div
+                    key={index}
+                    className="group relative rounded-2xl transition-all duration-300 hover:-translate-y-1"
+                  >
+                    <div
+                      className="relative rounded-2xl p-4 text-center overflow-hidden transition-all duration-300"
+                      style={{
+                        background: theme === 'dark' ? 'rgba(10,10,22,0.75)' : 'rgba(255,255,255,0.92)',
+                        backdropFilter: 'blur(24px)',
+                        border: theme === 'dark' ? '1px solid rgba(255,255,255,0.07)' : '1px solid rgba(0,0,0,0.06)',
+                        boxShadow: `0 10px 30px rgba(0,0,0,${theme === 'dark' ? '0.3' : '0.05'})`,
+                      }}
+                    >
+                      <div className="flex justify-center mb-1.5 transition-transform duration-300 group-hover:scale-110">
+                        <span className={cfg.icon}>{stat.icon}</span>
+                      </div>
+                      <div className={`text-2xl sm:text-3xl font-black mb-0.5 ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>
+                        {stat.value}
+                      </div>
+                      <div className="text-[11px] font-bold text-gray-400 tracking-wide uppercase">
+                        {stat.label}
+                      </div>
+                    </div>
                   </div>
-                  <div className="text-2xl font-bold text-white mb-1">{stat.value}</div>
-                  <div className="text-sm text-gray-400">{stat.label}</div>
-                </div>
-              ))}
+                );
+              })}
             </div>
 
-            <div className="flex flex-wrap gap-4 justify-center lg:justify-start">
+            {/* Action Buttons */}
+            <div className="flex flex-wrap gap-3.5 justify-center lg:justify-start">
               <button
                 onClick={() => scrollToSection('projects')}
-                className="group px-8 py-3 rounded-full bg-gradient-to-r from-blue-500 to-purple-600 text-white font-semibold hover:shadow-xl hover:shadow-purple-500/30 transition-all duration-300 hover:-translate-y-1"
+                className="group px-7 py-3.5 rounded-2xl text-white font-bold text-sm tracking-wide transition-all duration-300 hover:scale-105 hover:shadow-xl shadow-lg flex items-center gap-2"
+                style={{
+                  background: 'linear-gradient(135deg, #3b82f6 0%, #8b5cf6 50%, #ec4899 100%)',
+                  boxShadow: '0 8px 30px rgba(139,92,246,0.35)',
+                }}
               >
-                <span className="flex items-center gap-2">
-                  Voir les Projets
-                  <ExternalLink size={18} className="group-hover:translate-x-1 transition-transform" />
-                </span>
+                <span>Voir les Projets</span>
+                <ExternalLink size={16} className="group-hover:translate-x-1 transition-transform" />
               </button>
+
               <button
                 onClick={() => scrollToSection('contact')}
-                className="px-5 py-3 rounded-full border-2 border-gray-600 text-gray-200 hover:bg-gray-800/50 hover:border-gray-500 transition-all duration-300 hover:-translate-y-1"
+                className={`px-6 py-3.5 rounded-2xl font-bold text-sm tracking-wide border transition-all duration-300 hover:scale-105 ${
+                  theme === 'dark'
+                    ? 'bg-white/5 border-white/15 text-gray-200 hover:bg-white/10 hover:border-white/30'
+                    : 'bg-black/5 border-black/15 text-gray-800 hover:bg-black/10 hover:border-black/30'
+                }`}
               >
                 Me Contacter
               </button>
-              <button className="group px-5 py-3 rounded-full border-2 border-purple-500/50 text-purple-400 hover:bg-purple-500/10 hover:border-purple-400 transition-all duration-300 hover:-translate-y-1">
-                <span className="flex items-center gap-2">
-                  Télécharger CV
-                  <Download size={18} className="group-hover:translate-y-1 transition-transform" />
-                </span>
+
+              <button
+                className={`group px-6 py-3.5 rounded-2xl font-bold text-sm tracking-wide border transition-all duration-300 hover:scale-105 flex items-center gap-2 ${
+                  theme === 'dark'
+                    ? 'bg-purple-500/10 border-purple-500/30 text-purple-300 hover:bg-purple-500/20 hover:border-purple-500/50'
+                    : 'bg-purple-50 border-purple-300 text-purple-700 hover:bg-purple-100'
+                }`}
+              >
+                <span>Télécharger CV</span>
+                <Download size={16} className="group-hover:translate-y-0.5 transition-transform" />
               </button>
             </div>
           </div>
         </div>
 
-        <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2">
+        <div className="absolute bottom-6 left-1/2 transform -translate-x-1/2 z-10">
           <button
             onClick={() => scrollToSection('about')}
-            className="animate-bounce"
+            className="p-2 rounded-full text-gray-400 hover:text-white transition-colors animate-bounce"
+            aria-label="Scroll down"
           >
-            <ChevronDown className="text-gray-400" size={32} />
+            <ChevronDown size={28} />
           </button>
         </div>
       </section>
 
       {/* About Section */}
-      <section id="about" className="py-24 px-4 relative">
-        <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-16">
-            <div className="inline-flex items-center gap-2 px-4 py-2 mb-4 rounded-full bg-gradient-to-r from-blue-500/20 to-purple-500/20 border border-blue-500/30">
-              <Award className="w-4 h-4 text-blue-400" />
-              <span className="text-sm font-medium text-blue-400">À propos de moi</span>
+      <section id="about" className={`py-28 px-4 sm:px-6 relative overflow-hidden ${theme === 'dark' ? 'bg-gradient-to-b from-gray-900 via-[#0d0d1a] to-gray-900' : 'bg-gradient-to-b from-gray-50 via-slate-100/60 to-gray-50'}`}>
+
+        {/* Ambient Glows */}
+        <div className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-blue-600/8 rounded-full blur-[140px] pointer-events-none" />
+        <div className="absolute bottom-0 right-1/4 w-[500px] h-[500px] bg-purple-600/8 rounded-full blur-[140px] pointer-events-none" />
+
+        <div className="max-w-6xl mx-auto relative z-10">
+
+          {/* Header */}
+          <div className="text-center mb-20">
+            <div
+              className="inline-flex items-center gap-2 px-5 py-2.5 mb-5 rounded-full border backdrop-blur-xl"
+              style={{ background: 'rgba(139,92,246,0.08)', borderColor: 'rgba(139,92,246,0.25)', boxShadow: '0 0 30px rgba(139,92,246,0.1)' }}
+            >
+              <Award className="w-4 h-4 text-purple-400" />
+              <span className="text-xs font-bold tracking-widest uppercase text-purple-400">À propos de moi</span>
             </div>
-            <h2 className="text-4xl sm:text-5xl font-bold mb-4">Créer l'Excellence Numérique</h2>
-            <p className="text-lg text-gray-400 max-w-2xl mx-auto">
+            <h2
+              className="text-4xl sm:text-5xl lg:text-6xl font-black mb-5 tracking-tight"
+              style={{ background: 'linear-gradient(135deg, #ffffff 0%, #c4b5fd 50%, #93c5fd 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}
+            >
+              Créer l'Excellence Numérique
+            </h2>
+            <p className="text-base text-gray-400 max-w-xl mx-auto leading-relaxed">
               Passionné par l'innovation et engagé pour la qualité
             </p>
           </div>
 
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
-            <div className="space-y-6">
-              <h3 className="text-3xl font-bold">
-                Bonjour ! Je suis <span className="text-blue-400">OUABEN Mohamed</span>
-              </h3>
-              <p className="text-lg text-gray-400 leading-relaxed">
-                Développeur Full-Stack web et mobile, je conçois et développe des applications modernes en utilisant des technologies telles que Laravel, React, Spring Boot et Kotlin.              </p>
-              <p className="text-lg text-gray-400 leading-relaxed">
-                Actuellement étudiant en Master d’Excellence en Ingénierie Logicielle à l’Université Ibn Zohr d’Agadir (Maroc), je poursuis ma formation tout en renforçant mes compétences à travers des projets pratiques et innovants.
-              </p>
-              <p className="text-lg text-gray-400 leading-relaxed">
-                Motivé, curieux et rigoureux, je suis à la recherche d’opportunités pour mettre en pratique mes connaissances et évoluer dans le domaine du développement logiciel.   </p>
+          <div className="grid lg:grid-cols-2 gap-8 items-stretch">
 
-              <div className="grid grid-cols-2 gap-4 pt-6">
-                <div className="flex items-center gap-3">
-                  <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
-                  <span className="font-medium">Stage / Emploi</span>
+            {/* Left Card: Presentation & Bio without outer/inner border */}
+            <div className="group relative transition-all duration-500 hover:-translate-y-1.5 flex">
+              {/* Outer hover glow without harsh border */}
+              <div
+                className="absolute -inset-px rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
+                style={{ background: 'linear-gradient(135deg, rgba(6,182,212,0.12), rgba(59,130,246,0.12))' }}
+              />
+
+              {/* Card body - border and left bar removed */}
+              <div
+                className="relative w-full rounded-3xl overflow-hidden p-7 sm:p-9 flex flex-col justify-between"
+                style={{
+                  background: theme === 'dark' ? 'rgba(10,10,22,0.75)' : 'rgba(255,255,255,0.92)',
+                  backdropFilter: 'blur(28px)',
+                  boxShadow: `0 24px 64px rgba(0,0,0,${theme === 'dark' ? '0.45' : '0.08'})`,
+                }}
+              >
+                {/* Shimmer sweep */}
+                <div className="absolute inset-0 pointer-events-none overflow-hidden rounded-3xl">
+                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/[0.03] to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-[1200ms] ease-out" />
                 </div>
-                <div className="flex items-center gap-3">
-                  <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
-                  <span className="font-medium">Travail à distance</span>
+
+                <div className="space-y-6 relative z-10">
+                  <h3
+                    className="text-2xl sm:text-3xl font-extrabold leading-snug tracking-tight"
+                    style={{ color: theme === 'dark' ? '#f1f5f9' : '#0f172a' }}
+                  >
+                    Bonjour ! Je suis{' '}
+                    <span className="bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">
+                      OUABEN Mohamed
+                    </span>
+                  </h3>
+
+                  <p className={`text-sm sm:text-base leading-relaxed ${theme === 'dark' ? 'text-gray-300' : 'text-gray-600'}`}>
+                    Développeur Full-Stack web et mobile, je conçois et développe des applications modernes en utilisant des technologies telles que Laravel, React, Spring Boot et Kotlin.
+                  </p>
+
+                  <p className={`text-sm sm:text-base leading-relaxed ${theme === 'dark' ? 'text-gray-300' : 'text-gray-600'}`}>
+                    Actuellement étudiant en Master d’Excellence en Ingénierie Logicielle à l’Université Ibn Zohr d’Agadir (Maroc), je poursuis ma formation tout en renforçant mes compétences à travers des projets pratiques et innovants.
+                  </p>
+
+                  <p className={`text-sm sm:text-base leading-relaxed ${theme === 'dark' ? 'text-gray-300' : 'text-gray-600'}`}>
+                    Motivé, curieux et rigoureux, je suis à la recherche d’opportunités pour mettre en pratique mes connaissances et évoluer dans le domaine du développement logiciel.
+                  </p>
                 </div>
-                <div className="flex items-center gap-3">
-                  <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
-                  <span className="font-medium">Projets académiques</span>
+
+                {/* Status Badges */}
+                <div className="pt-8 border-t border-white/8 mt-6 grid grid-cols-1 sm:grid-cols-3 gap-3 relative z-10">
+                  <div
+                    className="flex items-center gap-2.5 px-3.5 py-2.5 rounded-xl border transition-all duration-300 hover:scale-105"
+                    style={{
+                      background: theme === 'dark' ? 'rgba(34,197,94,0.08)' : 'rgba(34,197,94,0.06)',
+                      borderColor: 'rgba(34,197,94,0.25)',
+                    }}
+                  >
+                    <div className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse shadow-[0_0_8px_rgba(52,211,153,0.8)]" />
+                    <span className="text-xs font-bold text-emerald-400">Stage / Emploi</span>
+                  </div>
+
+                  <div
+                    className="flex items-center gap-2.5 px-3.5 py-2.5 rounded-xl border transition-all duration-300 hover:scale-105"
+                    style={{
+                      background: theme === 'dark' ? 'rgba(59,130,246,0.08)' : 'rgba(59,130,246,0.06)',
+                      borderColor: 'rgba(59,130,246,0.25)',
+                    }}
+                  >
+                    <div className="w-2.5 h-2.5 rounded-full bg-blue-400 animate-pulse shadow-[0_0_8px_rgba(96,165,250,0.8)]" />
+                    <span className="text-xs font-bold text-blue-400">Travail à distance</span>
+                  </div>
+
+                  <div
+                    className="flex items-center gap-2.5 px-3.5 py-2.5 rounded-xl border transition-all duration-300 hover:scale-105"
+                    style={{
+                      background: theme === 'dark' ? 'rgba(168,85,247,0.08)' : 'rgba(168,85,247,0.06)',
+                      borderColor: 'rgba(168,85,247,0.25)',
+                    }}
+                  >
+                    <div className="w-2.5 h-2.5 rounded-full bg-purple-400 animate-pulse shadow-[0_0_8px_rgba(192,132,252,0.8)]" />
+                    <span className="text-xs font-bold text-purple-400">Projets académiques</span>
+                  </div>
                 </div>
               </div>
             </div>
 
-            <div className={`${cardClass} rounded-2xl p-8 shadow-xl border ${borderClass}`}>
-              <h3 className="text-2xl font-semibold mb-6">Aperçu des Technologies</h3>
-              <div className="space-y-6">
-                <div className="flex items-center gap-4 p-4 rounded-xl bg-gradient-to-r from-blue-500/10 to-transparent">
-                  <div className="p-3 rounded-lg bg-blue-500/20">
-                    <Code className="text-blue-400" size={24} />
-                  </div>
-                  <div>
-                    <p className="font-semibold">Développement Front-end</p>
-                    <p className="text-sm text-gray-400">
-                      React.js, HTML/CSS/JS, Tailwind, Flutter
-                    </p>
-                  </div>
+
+            {/* Right Card: Aperçu des Technologies */}
+            <div className="group relative transition-all duration-500 hover:-translate-y-1.5 flex">
+              {/* Outer hover ring */}
+              <div
+                className="absolute -inset-px rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
+                style={{ border: '1px solid rgba(168,85,247,0.5)', background: 'linear-gradient(135deg, rgba(168,85,247,0.1), rgba(236,72,153,0.1))' }}
+              />
+
+              {/* Card body */}
+              <div
+                className="relative w-full rounded-3xl overflow-hidden p-7 sm:p-9 flex flex-col justify-between"
+                style={{
+                  background: theme === 'dark' ? 'rgba(10,10,22,0.75)' : 'rgba(255,255,255,0.92)',
+                  backdropFilter: 'blur(28px)',
+                  border: theme === 'dark' ? '1px solid rgba(255,255,255,0.07)' : '1px solid rgba(0,0,0,0.06)',
+                  boxShadow: `0 24px 64px rgba(0,0,0,${theme === 'dark' ? '0.45' : '0.08'}), inset 0 1px 0 rgba(255,255,255,0.05)`,
+                }}
+              >
+                {/* Left accent bar */}
+                <div
+                  className="absolute left-0 top-0 bottom-0 w-1 group-hover:w-[5px] transition-all duration-500 rounded-l-3xl"
+                  style={{ background: 'linear-gradient(to bottom, #a855f7, #ec4899)' }}
+                />
+
+                {/* Shimmer sweep */}
+                <div className="absolute inset-0 pointer-events-none overflow-hidden rounded-3xl">
+                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/[0.03] to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-[1200ms] ease-out" />
                 </div>
-                <div className="flex items-center gap-4 p-4 rounded-xl bg-gradient-to-r from-green-500/10 to-transparent">
-                  <div className="p-3 rounded-lg bg-green-500/20">
-                    <Server className="text-green-400" size={24} />
+
+                <div className="relative z-10">
+                  <div className="flex items-center gap-3 mb-6">
+                    <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-purple-500/20 to-pink-500/20 border border-purple-500/30 flex items-center justify-center text-purple-400">
+                      <Zap size={20} />
+                    </div>
+                    <h3
+                      className="text-xl sm:text-2xl font-extrabold tracking-tight"
+                      style={{ color: theme === 'dark' ? '#f1f5f9' : '#0f172a' }}
+                    >
+                      Aperçu des Technologies
+                    </h3>
                   </div>
-                  <div>
-                    <p className="font-semibold">Développement Back-end</p>
-                    <p className="text-sm text-gray-400">
-                      Laravel, Spring Boot, Node.js, ASP.NET
-                    </p>
-                  </div>
-                </div>
-                <div className="flex items-center gap-4 p-4 rounded-xl bg-gradient-to-r from-purple-500/10 to-transparent">
-                  <div className="p-3 rounded-lg bg-purple-500/20">
-                    <Database className="text-purple-400" size={24} />
-                  </div>
-                  <div>
-                    <p className="font-semibold">Gestion de Bases de Données</p>
-                    <p className="text-sm text-gray-400">
-                      MySQL, PostgreSQL, SQL Server, Room
-                    </p>
-                  </div>
-                </div>
-                <div className="flex items-center gap-4 p-4 rounded-xl bg-gradient-to-r from-orange-500/10 to-transparent">
-                  <div className="p-3 rounded-lg bg-orange-500/20">
-                    <Wrench className="text-orange-400" size={24} />
-                  </div>
-                  <div>
-                    <p className="font-semibold">Mobile & Tools</p>
-                    <p className="text-sm text-gray-400">
-                      Kotlin, Jetpack Compose, Docker, Git/GitHub
-                    </p>
+
+                  <div className="space-y-4">
+                    {/* Front-end */}
+                    <div
+                      className="flex items-center gap-4 p-4 rounded-2xl border transition-all duration-300 hover:scale-[1.02]"
+                      style={{
+                        background: theme === 'dark' ? 'rgba(59,130,246,0.06)' : 'rgba(59,130,246,0.04)',
+                        borderColor: 'rgba(59,130,246,0.18)',
+                      }}
+                    >
+                      <div className="p-3 rounded-xl bg-gradient-to-br from-blue-500/20 to-cyan-500/20 border border-blue-500/30 text-blue-400 shrink-0">
+                        <Code size={22} />
+                      </div>
+                      <div>
+                        <p className={`font-bold text-sm sm:text-base ${theme === 'dark' ? 'text-gray-100' : 'text-gray-900'}`}>
+                          Développement Front-end
+                        </p>
+                        <p className="text-xs sm:text-sm text-gray-400 mt-0.5">
+                          React.js, HTML/CSS/JS, Tailwind, Flutter
+                        </p>
+                      </div>
+                    </div>
+
+                    {/* Back-end */}
+                    <div
+                      className="flex items-center gap-4 p-4 rounded-2xl border transition-all duration-300 hover:scale-[1.02]"
+                      style={{
+                        background: theme === 'dark' ? 'rgba(34,197,94,0.06)' : 'rgba(34,197,94,0.04)',
+                        borderColor: 'rgba(34,197,94,0.18)',
+                      }}
+                    >
+                      <div className="p-3 rounded-xl bg-gradient-to-br from-green-500/20 to-emerald-500/20 border border-green-500/30 text-green-400 shrink-0">
+                        <Server size={22} />
+                      </div>
+                      <div>
+                        <p className={`font-bold text-sm sm:text-base ${theme === 'dark' ? 'text-gray-100' : 'text-gray-900'}`}>
+                          Développement Back-end
+                        </p>
+                        <p className="text-xs sm:text-sm text-gray-400 mt-0.5">
+                          Laravel, Spring Boot, Node.js, ASP.NET
+                        </p>
+                      </div>
+                    </div>
+
+                    {/* Databases */}
+                    <div
+                      className="flex items-center gap-4 p-4 rounded-2xl border transition-all duration-300 hover:scale-[1.02]"
+                      style={{
+                        background: theme === 'dark' ? 'rgba(168,85,247,0.06)' : 'rgba(168,85,247,0.04)',
+                        borderColor: 'rgba(168,85,247,0.18)',
+                      }}
+                    >
+                      <div className="p-3 rounded-xl bg-gradient-to-br from-purple-500/20 to-pink-500/20 border border-purple-500/30 text-purple-400 shrink-0">
+                        <Database size={22} />
+                      </div>
+                      <div>
+                        <p className={`font-bold text-sm sm:text-base ${theme === 'dark' ? 'text-gray-100' : 'text-gray-900'}`}>
+                          Gestion de Bases de Données
+                        </p>
+                        <p className="text-xs sm:text-sm text-gray-400 mt-0.5">
+                          MySQL, PostgreSQL, SQL Server, Room
+                        </p>
+                      </div>
+                    </div>
+
+                    {/* Mobile & Tools */}
+                    <div
+                      className="flex items-center gap-4 p-4 rounded-2xl border transition-all duration-300 hover:scale-[1.02]"
+                      style={{
+                        background: theme === 'dark' ? 'rgba(249,115,22,0.06)' : 'rgba(249,115,22,0.04)',
+                        borderColor: 'rgba(249,115,22,0.18)',
+                      }}
+                    >
+                      <div className="p-3 rounded-xl bg-gradient-to-br from-orange-500/20 to-amber-500/20 border border-orange-500/30 text-orange-400 shrink-0">
+                        <Wrench size={22} />
+                      </div>
+                      <div>
+                        <p className={`font-bold text-sm sm:text-base ${theme === 'dark' ? 'text-gray-100' : 'text-gray-900'}`}>
+                          Mobile & Tools
+                        </p>
+                        <p className="text-xs sm:text-sm text-gray-400 mt-0.5">
+                          Kotlin, Jetpack Compose, Docker, Git/GitHub
+                        </p>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -1174,628 +1505,1252 @@ const Portfolio = () => {
       </section>
 
       {/* Skills Section */}
-      <section id="skills" className={`py-24 px-4 relative ${theme === 'dark' ? 'bg-gray-900/50' : 'bg-gray-100/50'}`}>
-        <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl sm:text-5xl font-bold mb-4">Expertise Technique</h2>
-            <p className="text-lg text-gray-400 max-w-2xl mx-auto">
+      <section id="skills" className={`py-28 px-4 sm:px-6 relative overflow-hidden ${theme === 'dark' ? 'bg-gradient-to-b from-gray-900 via-[#0d0d1a] to-gray-900' : 'bg-gradient-to-b from-gray-50 via-slate-100/60 to-gray-50'}`}>
+
+        {/* Ambient Glows */}
+        <div className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-blue-600/8 rounded-full blur-[140px] pointer-events-none" />
+        <div className="absolute bottom-0 right-1/4 w-[500px] h-[500px] bg-purple-600/8 rounded-full blur-[140px] pointer-events-none" />
+
+        <div className="max-w-6xl mx-auto relative z-10">
+
+          {/* Header */}
+          <div className="text-center mb-20">
+            <div
+              className="inline-flex items-center gap-2 px-5 py-2.5 mb-5 rounded-full border backdrop-blur-xl"
+              style={{ background: 'rgba(139,92,246,0.08)', borderColor: 'rgba(139,92,246,0.25)', boxShadow: '0 0 30px rgba(139,92,246,0.1)' }}
+            >
+              <Code className="w-4 h-4 text-purple-400" />
+              <span className="text-xs font-bold tracking-widest uppercase text-purple-400">Expertise Technique</span>
+            </div>
+            <h2
+              className="text-4xl sm:text-5xl lg:text-6xl font-black mb-5 tracking-tight"
+              style={{ background: 'linear-gradient(135deg, #ffffff 0%, #c4b5fd 50%, #93c5fd 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}
+            >
+              Expertise Technique
+            </h2>
+            <p className="text-base text-gray-400 max-w-xl mx-auto leading-relaxed">
               Maîtrise complète de la pile de développement
             </p>
           </div>
 
-          <div className="grid md:grid-cols-2 gap-8">
-            {Object.entries(skills).map(([category, items]) => (
-              <div
-                key={category}
-                className={`${cardClass} rounded-2xl p-8 shadow-xl border ${borderClass} hover:shadow-2xl transition-all duration-300 hover:-translate-y-1`}
-              >
-                <h3 className="text-xl font-semibold mb-6 capitalize flex items-center gap-3">
-                  <div className={`p-2 rounded-lg ${category === 'frontend' ? 'bg-blue-500/20 text-blue-400' :
-                    category === 'backend' ? 'bg-green-500/20 text-green-400' :
-                      category === 'mobile' ? 'bg-purple-500/20 text-purple-400' :
-                        category === 'devops' ? 'bg-indigo-500/20 text-indigo-400' :
-                          category === 'database' ? 'bg-pink-500/20 text-pink-400' :
-                            'bg-orange-500/20 text-orange-400'
-                    }`}>
-                    {category === 'frontend' && <Code size={20} />}
-                    {category === 'backend' && <Server size={20} />}
-                    {category === 'database' && <Database size={20} />}
-                    {category === 'mobile' && <Smartphone size={20} />}
-                    {category === 'devops' && <Wrench size={20} />}
-                    {category === 'data' && <BarChart3 size={20} />}
-                  </div>
-                  {category === 'frontend' ? 'Front-end' :
-                    category === 'backend' ? 'Back-end' :
-                      category === 'mobile' ? 'Mobile' :
-                        category === 'database' ? 'Base de données' :
-                          category === 'devops' ? 'DevOps' :
-                            category === 'data' ? 'Données' : category}
-                </h3>
-                <div className="space-y-4">
-                  {items.map((skill) => (
-                    <div key={skill.name} className="group">
-                      <div className="flex justify-between mb-2">
-                        <span className="font-medium group-hover:text-blue-400 transition-colors">
-                          {skill.name}
-                        </span>
-                        <span className="text-gray-400 group-hover:text-white transition-colors">
-                          {skill.level}%
-                        </span>
-                      </div>
-                      <div className={`h-2 ${theme === 'dark' ? 'bg-gray-700/50' : 'bg-gray-300'} rounded-full overflow-hidden`}>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            {Object.entries(skills).map(([category, items]) => {
+              const categoryConfig = {
+                frontend: {
+                  label: 'Front-end',
+                  icon: <Code size={20} />,
+                  from: '#06b6d4',
+                  to: '#3b82f6',
+                  glow: 'rgba(6,182,212,0.22)',
+                },
+                backend: {
+                  label: 'Back-end',
+                  icon: <Server size={20} />,
+                  from: '#10b981',
+                  to: '#06b6d4',
+                  glow: 'rgba(16,185,129,0.22)',
+                },
+                mobile: {
+                  label: 'Mobile',
+                  icon: <Smartphone size={20} />,
+                  from: '#a855f7',
+                  to: '#ec4899',
+                  glow: 'rgba(168,85,247,0.22)',
+                },
+                database: {
+                  label: 'Base de données',
+                  icon: <Database size={20} />,
+                  from: '#6366f1',
+                  to: '#a855f7',
+                  glow: 'rgba(99,102,241,0.22)',
+                },
+                devops: {
+                  label: 'DevOps',
+                  icon: <Wrench size={20} />,
+                  from: '#f97316',
+                  to: '#ef4444',
+                  glow: 'rgba(249,115,22,0.22)',
+                },
+                data: {
+                  label: 'Données',
+                  icon: <BarChart3 size={20} />,
+                  from: '#eab308',
+                  to: '#f97316',
+                  glow: 'rgba(234,179,8,0.22)',
+                },
+              };
+
+              const cfg = categoryConfig[category] || {
+                label: category,
+                icon: <Code size={20} />,
+                from: '#3b82f6',
+                to: '#8b5cf6',
+                glow: 'rgba(59,130,246,0.22)',
+              };
+
+              return (
+                <div
+                  key={category}
+                  className="group relative transition-all duration-500 hover:-translate-y-1.5 flex"
+                >
+                  {/* Outer hover ring */}
+                  <div
+                    className="absolute -inset-px rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
+                    style={{
+                      border: `1px solid ${cfg.from}50`,
+                      background: `linear-gradient(135deg, ${cfg.from}10, ${cfg.to}10)`,
+                    }}
+                  />
+
+                  {/* Card body */}
+                  <div
+                    className="relative w-full rounded-3xl overflow-hidden p-6 sm:p-7 flex flex-col justify-between"
+                    style={{
+                      background: theme === 'dark' ? 'rgba(10,10,22,0.75)' : 'rgba(255,255,255,0.92)',
+                      backdropFilter: 'blur(28px)',
+                      border: theme === 'dark' ? '1px solid rgba(255,255,255,0.07)' : '1px solid rgba(0,0,0,0.06)',
+                      boxShadow: `0 20px 50px rgba(0,0,0,${theme === 'dark' ? '0.4' : '0.08'}), inset 0 1px 0 rgba(255,255,255,0.05)`,
+                    }}
+                  >
+                    {/* Top accent bar */}
+                    <div
+                      className="absolute top-0 left-6 right-6 h-0.5 rounded-full opacity-60 group-hover:opacity-100 transition-opacity duration-500"
+                      style={{ background: `linear-gradient(to right, ${cfg.from}, ${cfg.to})` }}
+                    />
+
+                    {/* Shimmer sweep */}
+                    <div className="absolute inset-0 pointer-events-none overflow-hidden rounded-3xl">
+                      <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/[0.03] to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-[1200ms] ease-out" />
+                    </div>
+
+                    <div className="relative z-10">
+                      {/* Header Category Title */}
+                      <div className="flex items-center gap-3 mb-6">
                         <div
-                          className="h-full rounded-full transition-all duration-1000 group-hover:shadow-lg group-hover:shadow-blue-500/30"
+                          className="w-10 h-10 rounded-xl flex items-center justify-center shrink-0 border transition-transform duration-300 group-hover:scale-110"
                           style={{
-                            width: `${skill.level}%`,
-                            background: `linear-gradient(90deg, ${category === 'frontend' ? '#3b82f6, #8b5cf6' :
-                              category === 'backend' ? '#10b981, #3b82f6' :
-                                category === 'database' ? '#8b5cf6, #ec4899' :
-                                  '#f97316, #eab308'
-                              })`
+                            background: `linear-gradient(135deg, ${cfg.from}20, ${cfg.to}20)`,
+                            borderColor: `${cfg.from}40`,
+                            color: cfg.from,
+                            boxShadow: `0 4px 20px ${cfg.glow}`,
                           }}
-                        />
+                        >
+                          {cfg.icon}
+                        </div>
+                        <h3
+                          className="text-lg font-black tracking-tight"
+                          style={{ color: theme === 'dark' ? '#f1f5f9' : '#0f172a' }}
+                        >
+                          {cfg.label}
+                        </h3>
+                      </div>
+
+                      {/* Skill items */}
+                      <div className="space-y-4">
+                        {items.map((skill) => (
+                          <div key={skill.name} className="group/item">
+                            <div className="flex justify-between items-center mb-1.5">
+                              <span
+                                className={`text-xs sm:text-sm font-semibold transition-colors duration-200 ${
+                                  theme === 'dark' ? 'text-gray-300 group-hover/item:text-white' : 'text-gray-700 group-hover/item:text-black'
+                                }`}
+                              >
+                                {skill.name}
+                              </span>
+                              <span
+                                className="text-xs font-bold transition-colors duration-200"
+                                style={{ color: cfg.from }}
+                              >
+                                {skill.level}%
+                              </span>
+                            </div>
+
+                            {/* Progress bar track */}
+                            <div
+                              className="h-2 rounded-full overflow-hidden p-0.5"
+                              style={{
+                                background: theme === 'dark' ? 'rgba(255,255,255,0.06)' : 'rgba(0,0,0,0.06)',
+                              }}
+                            >
+                              <div
+                                className="h-full rounded-full transition-all duration-1000 ease-out"
+                                style={{
+                                  width: `${skill.level}%`,
+                                  background: `linear-gradient(90deg, ${cfg.from}, ${cfg.to})`,
+                                  boxShadow: `0 0 10px ${cfg.glow}`,
+                                }}
+                              />
+                            </div>
+                          </div>
+                        ))}
                       </div>
                     </div>
-                  ))}
+                  </div>
                 </div>
-              </div>
-            ))}
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
+      {/* Expérience Professionnelle Section */}
+      <section id="pro-experience" className={`py-28 px-4 sm:px-6 relative overflow-hidden ${theme === 'dark' ? 'bg-gradient-to-b from-gray-900 via-[#0d0d1a] to-gray-900' : 'bg-gradient-to-b from-gray-50 via-slate-100/60 to-gray-50'}`}>
+
+        {/* Ambient Glows */}
+        <div className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-blue-600/8 rounded-full blur-[140px] pointer-events-none" />
+        <div className="absolute bottom-0 right-1/4 w-[500px] h-[500px] bg-purple-600/8 rounded-full blur-[140px] pointer-events-none" />
+
+        <div className="max-w-5xl mx-auto relative z-10">
+
+          {/* Header */}
+          <div className="text-center mb-20">
+            <div
+              className="inline-flex items-center gap-2 px-5 py-2.5 mb-5 rounded-full border backdrop-blur-xl"
+              style={{ background: 'rgba(139,92,246,0.08)', borderColor: 'rgba(139,92,246,0.25)', boxShadow: '0 0 30px rgba(139,92,246,0.1)' }}
+            >
+              <Briefcase className="w-4 h-4 text-purple-400" />
+              <span className="text-xs font-bold tracking-widest uppercase text-purple-400">
+                Parcours en Entreprise
+              </span>
+            </div>
+            <h2 className="text-4xl sm:text-5xl lg:text-6xl font-black mb-5 tracking-tight"
+              style={{
+                background: 'linear-gradient(135deg, #ffffff 0%, #c4b5fd 50%, #93c5fd 100%)',
+                WebkitBackgroundClip: 'text',
+                WebkitTextFillColor: 'transparent',
+              }}
+            >
+              Expérience Professionnelle
+            </h2>
+            <p className="text-base text-gray-400 max-w-xl mx-auto leading-relaxed">
+              Immersions stratégiques en entreprise axées sur le développement Full-Stack, Mobile
+            </p>
+          </div>
+
+          {/* Cards — split layout */}
+          <div className="flex flex-col gap-8">
+            {professionalExperiences.map((exp, index) => {
+              const clr = index === 0
+                ? { from: '#06b6d4', to: '#3b82f6', glow: 'rgba(6,182,212,0.22)' }
+                : { from: '#a855f7', to: '#ec4899', glow: 'rgba(168,85,247,0.22)' };
+
+              return (
+                <div key={exp.id} className="group relative transition-all duration-500 hover:-translate-y-1.5">
+
+                  {/* Outer hover ring */}
+                  <div
+                    className="absolute -inset-px rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
+                    style={{ border: `1px solid ${clr.from}50`, background: `linear-gradient(135deg, ${clr.from}10, ${clr.to}10)` }}
+                  />
+
+                  {/* Card body */}
+                  <div
+                    className="relative rounded-3xl overflow-hidden"
+                    style={{
+                      background: theme === 'dark' ? 'rgba(10,10,22,0.75)' : 'rgba(255,255,255,0.92)',
+                      backdropFilter: 'blur(28px)',
+                      border: theme === 'dark' ? '1px solid rgba(255,255,255,0.07)' : '1px solid rgba(0,0,0,0.06)',
+                      boxShadow: `0 24px 64px rgba(0,0,0,${theme === 'dark' ? '0.45' : '0.08'}), inset 0 1px 0 rgba(255,255,255,0.05)`,
+                    }}
+                  >
+                    {/* Left accent bar */}
+                    <div
+                      className="absolute left-0 top-0 bottom-0 w-1 group-hover:w-[5px] transition-all duration-500 rounded-l-3xl"
+                      style={{ background: `linear-gradient(to bottom, ${clr.from}, ${clr.to})` }}
+                    />
+
+                    {/* Shimmer sweep */}
+                    <div className="absolute inset-0 pointer-events-none overflow-hidden rounded-3xl">
+                      <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/[0.03] to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-[1200ms] ease-out" />
+                    </div>
+
+                    {/* Inner layout */}
+                    <div className="ml-1 flex flex-col sm:flex-row">
+
+                      {/* LEFT: Company Identity Panel */}
+                      <div
+                        className="flex flex-row sm:flex-col items-center gap-5 px-6 py-7 sm:w-52 sm:shrink-0 sm:justify-center"
+                        style={{ borderRight: theme === 'dark' ? '1px solid rgba(255,255,255,0.06)' : '1px solid rgba(0,0,0,0.06)' }}
+                      >
+                        <div
+                          className="w-16 h-16 sm:w-[72px] sm:h-[72px] rounded-2xl bg-white p-2.5 flex items-center justify-center shrink-0 transition-all duration-500 group-hover:scale-110"
+                          style={{ boxShadow: `0 0 0 2px rgba(255,255,255,0.08), 0 8px 32px ${clr.glow}` }}
+                        >
+                          <img src={exp.logo} alt="" className="w-full h-full object-contain" />
+                        </div>
+
+                        <div className="flex flex-col gap-2 sm:items-center sm:text-center">
+                          <p className={`text-sm font-extrabold leading-snug ${theme === 'dark' ? 'text-gray-100' : 'text-gray-900'}`}>
+                            {exp.company}
+                          </p>
+                          <div className="flex flex-wrap items-center gap-1.5 sm:justify-center">
+                            <span className="px-2 py-0.5 rounded-full text-[9px] font-black uppercase tracking-widest bg-blue-500/10 text-blue-400 border border-blue-500/25">
+                              Stage
+                            </span>
+                            <span className={`text-[10px] font-bold ${theme === 'dark' ? 'text-gray-400' : 'text-gray-500'}`}>
+                              • {exp.duration}
+                            </span>
+                          </div>
+                          <div className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-[10px] font-semibold border ${theme === 'dark' ? 'bg-white/5 text-gray-300 border-white/10' : 'bg-gray-100 text-gray-500 border-gray-200'}`}>
+                            <Calendar size={10} className="text-purple-400 shrink-0" />
+                            <span>{exp.period}</span>
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* RIGHT: Role + Achievements + Stack */}
+                      <div className="flex flex-col gap-5 flex-1 min-w-0 px-6 py-7">
+
+                        <div>
+                          <h3
+                            className="text-lg sm:text-xl lg:text-2xl font-extrabold mb-3 leading-snug tracking-tight"
+                            style={{ color: theme === 'dark' ? '#f1f5f9' : '#0f172a' }}
+                          >
+                            {exp.role}
+                          </h3>
+                          <span
+                            className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg text-[11px] font-bold tracking-wide border"
+                            style={{ background: `linear-gradient(135deg, ${clr.from}18, ${clr.to}14)`, borderColor: `${clr.from}40`, color: clr.from }}
+                          >
+                            <Zap size={11} />
+                            {exp.domain}
+                          </span>
+                        </div>
+
+                        <ul className="space-y-2">
+                          {exp.achievements.map((item, idx) => (
+                            <li
+                              key={idx}
+                              className={`flex items-start gap-3 px-3 py-2.5 rounded-xl border border-transparent transition-all duration-200 ${theme === 'dark' ? 'hover:bg-white/[0.03] hover:border-white/5' : 'hover:bg-gray-50 hover:border-gray-200'}`}
+                            >
+                              <div
+                                className="mt-0.5 w-[18px] h-[18px] rounded-full flex items-center justify-center shrink-0"
+                                style={{ background: `linear-gradient(135deg, ${clr.from}, ${clr.to})` }}
+                              >
+                                <CheckCircle size={11} className="text-white" />
+                              </div>
+                              <span className={`text-xs sm:text-sm font-medium leading-relaxed ${theme === 'dark' ? 'text-gray-300' : 'text-gray-600'}`}>
+                                {item}
+                              </span>
+                            </li>
+                          ))}
+                        </ul>
+
+                        <div className={`pt-4 border-t ${theme === 'dark' ? 'border-white/8' : 'border-gray-100'}`}>
+                          <p className="text-[10px] font-black uppercase tracking-[0.14em] text-gray-500 mb-2.5 flex items-center gap-1.5">
+                            <Wrench size={10} className="text-yellow-400" />
+                            Stack Technique
+                          </p>
+                          <div className="flex flex-wrap gap-1.5">
+                            {exp.stack.map((tech) => (
+                              <span
+                                key={tech.name}
+                                className={`px-2.5 py-1 text-[11px] font-semibold rounded-lg border transition-all duration-200 hover:scale-105 ${tech.color}`}
+                              >
+                                {tech.name}
+                              </span>
+                            ))}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
           </div>
         </div>
       </section>
 
       {/* Projects Section */}
-      <section id="projects" className="py-24 px-4">
-        <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl sm:text-5xl font-bold mb-4">Projets Phares</h2>
-            <p className="text-lg text-gray-400 max-w-2xl mx-auto">
+      <section id="projects" className={`py-28 px-4 sm:px-6 relative overflow-hidden ${theme === 'dark' ? 'bg-gradient-to-b from-gray-900 via-[#0d0d1a] to-gray-900' : 'bg-gradient-to-b from-gray-50 via-slate-100/60 to-gray-50'}`}>
+
+        {/* Ambient Glows */}
+        <div className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-blue-600/8 rounded-full blur-[140px] pointer-events-none" />
+        <div className="absolute bottom-0 right-1/4 w-[500px] h-[500px] bg-purple-600/8 rounded-full blur-[140px] pointer-events-none" />
+
+        <div className="max-w-6xl mx-auto relative z-10">
+
+          {/* Header */}
+          <div className="text-center mb-20">
+            <div
+              className="inline-flex items-center gap-2 px-5 py-2.5 mb-5 rounded-full border backdrop-blur-xl"
+              style={{ background: 'rgba(139,92,246,0.08)', borderColor: 'rgba(139,92,246,0.25)', boxShadow: '0 0 30px rgba(139,92,246,0.1)' }}
+            >
+              <Briefcase className="w-4 h-4 text-purple-400" />
+              <span className="text-xs font-bold tracking-widest uppercase text-purple-400">Projets Phares</span>
+            </div>
+            <h2
+              className="text-4xl sm:text-5xl lg:text-6xl font-black mb-5 tracking-tight"
+              style={{ background: 'linear-gradient(135deg, #ffffff 0%, #c4b5fd 50%, #93c5fd 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}
+            >
+              Projets Phares
+            </h2>
+            <p className="text-base text-gray-400 max-w-xl mx-auto leading-relaxed">
               Présentation de solutions innovantes et d'implémentations modernes
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {projects.slice(0, 8).map((project, index) => (
-              <div
-                key={index}
-                className={`group relative rounded-3xl cursor-pointer ${project.featured ? 'md:col-span-2 lg:col-span-2' : ''}`}
-                onMouseEnter={() => setHoveredProject(index)}
-                onMouseLeave={() => setHoveredProject(null)}
-                onClick={() => {
-                  setSelectedProjectScreenshots(project.screenshots);
-                  setCurrentScreenshotIndex(0);
-                }}
-              >
-                {/* Subtle animated background glow on hover */}
-                <div className="absolute -inset-1 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 rounded-3xl opacity-0 group-hover:opacity-25 blur-xl transition-all duration-700" />
-                
-                <div 
-                  className="relative h-full flex flex-col rounded-3xl overflow-hidden transition-all duration-500 group-hover:-translate-y-2 group-hover:shadow-[0_20px_40px_-15px_rgba(0,0,0,0.5)]"
-                  style={{
-                    background: theme === 'dark' 
-                      ? 'rgba(20, 20, 30, 0.4)' 
-                      : 'rgba(255, 255, 255, 0.6)',
-                    backdropFilter: 'blur(20px)',
-                    WebkitBackdropFilter: 'blur(20px)',
-                    border: theme === 'dark' 
-                      ? '1px solid rgba(255, 255, 255, 0.08)' 
-                      : '1px solid rgba(0, 0, 0, 0.08)',
+          {/* Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {projects.slice(0, 8).map((project, index) => {
+              const projectPalette = [
+                { from: '#06b6d4', to: '#3b82f6', glow: 'rgba(6,182,212,0.25)' },
+                { from: '#a855f7', to: '#ec4899', glow: 'rgba(168,85,247,0.25)' },
+                { from: '#3b82f6', to: '#6366f1', glow: 'rgba(59,130,246,0.25)' },
+                { from: '#10b981', to: '#06b6d4', glow: 'rgba(16,185,129,0.25)' },
+                { from: '#f97316', to: '#eab308', glow: 'rgba(249,115,22,0.25)' },
+                { from: '#8b5cf6', to: '#d946ef', glow: 'rgba(139,92,246,0.25)' },
+                { from: '#ec4899', to: '#f43f5e', glow: 'rgba(236,72,153,0.25)' },
+                { from: '#06b6d4', to: '#10b981', glow: 'rgba(6,182,212,0.25)' },
+              ];
+              const clr = projectPalette[index % projectPalette.length];
+
+              return (
+                <div
+                  key={index}
+                  className={`group relative rounded-3xl cursor-pointer transition-all duration-500 hover:-translate-y-2 flex flex-col ${
+                    project.featured ? 'md:col-span-2 lg:col-span-2' : ''
+                  }`}
+                  onClick={() => {
+                    setSelectedProjectScreenshots(project.screenshots);
+                    setCurrentScreenshotIndex(0);
                   }}
                 >
-                  {/* Top glass reflection line */}
-                  <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 z-20" />
+                  {/* Outer hover ring */}
+                  <div
+                    className="absolute -inset-px rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
+                    style={{
+                      border: `1px solid ${clr.from}50`,
+                      background: `linear-gradient(135deg, ${clr.from}12, ${clr.to}12)`,
+                    }}
+                  />
 
-                  <div className="relative overflow-hidden h-48 sm:h-56 w-full shrink-0">
-                    <img
-                      src={project.image}
-                      alt={project.title}
-                      className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700 ease-out"
+                  {/* Card Body */}
+                  <div
+                    className="relative w-full h-full flex flex-col justify-between rounded-3xl overflow-hidden"
+                    style={{
+                      background: theme === 'dark' ? 'rgba(10,10,22,0.75)' : 'rgba(255,255,255,0.92)',
+                      backdropFilter: 'blur(28px)',
+                      border: theme === 'dark' ? '1px solid rgba(255,255,255,0.07)' : '1px solid rgba(0,0,0,0.06)',
+                      boxShadow: `0 24px 64px rgba(0,0,0,${theme === 'dark' ? '0.45' : '0.08'}), inset 0 1px 0 rgba(255,255,255,0.05)`,
+                    }}
+                  >
+                    {/* Top accent bar */}
+                    <div
+                      className="absolute top-0 left-6 right-6 h-0.5 rounded-full opacity-60 group-hover:opacity-100 transition-opacity duration-500 z-20"
+                      style={{ background: `linear-gradient(to right, ${clr.from}, ${clr.to})` }}
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-gray-900/90 via-gray-900/40 to-transparent" />
-                    
-                    {/* Badge */}
-                    {project.featured && (
-                      <div className="absolute top-3 left-3 z-10">
-                        <span className="px-2.5 py-1.5 rounded-full bg-gradient-to-r from-blue-600/90 to-purple-600/90 text-white text-[10px] font-bold tracking-widest uppercase backdrop-blur-md shadow-lg border border-white/20">
-                          En vedette
-                        </span>
-                      </div>
-                    )}
 
-                    {/* Quick view text overlay on hover */}
-                    <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-10">
-                      <span className="px-5 py-2.5 rounded-full bg-black/60 text-white/95 text-sm font-medium backdrop-blur-md border border-white/20 flex items-center gap-2 transform translate-y-4 group-hover:translate-y-0 transition-all duration-500 shadow-xl">
-                        <Search size={16} /> Voir les images
-                      </span>
-                    </div>
-                  </div>
-
-                  <div className="p-5 sm:p-6 flex flex-col flex-grow relative z-10">
-                    <div className="flex justify-between items-start gap-4 mb-3">
-                      <h3 className={`text-xl font-bold tracking-tight transition-all duration-500 ${
-                        theme === 'dark' 
-                          ? 'text-gray-100 group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-blue-400 group-hover:to-purple-400' 
-                          : 'text-gray-900 group-hover:text-blue-600'
-                      }`}>
-                        {project.title}
-                      </h3>
-                      
-                      {/* Action Links */}
-                      <div className="flex gap-2 shrink-0 mt-1">
-                        <a
-                          href={project.github}
-                          onClick={(e) => e.stopPropagation()}
-                          className={`flex items-center justify-center w-10 h-10 rounded-full transition-all duration-300 hover:scale-110 shadow-sm ${
-                            theme === 'dark' 
-                              ? 'bg-white/5 hover:bg-white/10 text-gray-400 hover:text-white border border-white/5 hover:border-white/20' 
-                              : 'bg-black/5 hover:bg-black/10 text-gray-600 hover:text-gray-900 border border-black/5 hover:border-black/20'
-                          }`}
-                        >
-                          <Github size={18} />
-                        </a>
-                        <button
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            setSelectedProjectScreenshots(project.screenshots);
-                            setCurrentScreenshotIndex(0);
-                          }}
-                          className={`flex items-center justify-center w-10 h-10 rounded-full transition-all duration-300 hover:scale-110 shadow-sm ${
-                            theme === 'dark' 
-                              ? 'bg-white/5 hover:bg-white/10 text-gray-400 hover:text-white border border-white/5 hover:border-white/20' 
-                              : 'bg-black/5 hover:bg-black/10 text-gray-600 hover:text-gray-900 border border-black/5 hover:border-black/20'
-                          }`}
-                        >
-                          <ExternalLink size={18} />
-                        </button>
-                      </div>
+                    {/* Shimmer sweep */}
+                    <div className="absolute inset-0 pointer-events-none overflow-hidden rounded-3xl z-20">
+                      <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/[0.04] to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-[1200ms] ease-out" />
                     </div>
 
-                    <p className={`text-sm sm:text-base leading-relaxed mb-8 flex-grow ${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'}`}>
-                      {project.description}
-                    </p>
+                    <div>
+                      {/* Image Header */}
+                      <div className={`relative overflow-hidden w-full shrink-0 ${project.featured ? 'h-56 sm:h-64' : 'h-48 sm:h-52'}`}>
+                        <img
+                          src={project.image}
+                          alt={project.title}
+                          className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700 ease-out"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/40 to-transparent" />
 
-                    <div className="flex flex-wrap gap-2 mt-auto">
-                      {project.tech.map((tech) => (
-                        <span
-                          key={tech}
-                          className={`px-3 py-1.5 text-[11px] sm:text-xs font-semibold tracking-wide uppercase rounded-lg transition-colors duration-300 ${
-                            theme === 'dark'
-                              ? 'bg-white/5 border border-white/10 text-gray-300 group-hover:border-white/20 group-hover:bg-white/10'
-                              : 'bg-black/5 border border-black/10 text-gray-700 group-hover:border-black/20 group-hover:bg-black/10'
-                          }`}
-                        >
-                          {tech}
-                        </span>
-                      ))}
+                        {/* Featured Badge */}
+                        {project.featured && (
+                          <div className="absolute top-4 left-4 z-10">
+                            <span
+                              className="px-3.5 py-1 rounded-full text-white text-[10px] font-extrabold tracking-widest uppercase backdrop-blur-md shadow-lg border border-white/20"
+                              style={{ background: 'linear-gradient(135deg, rgba(59,130,246,0.9), rgba(168,85,247,0.9))' }}
+                            >
+                              En vedette
+                            </span>
+                          </div>
+                        )}
+
+                        {/* Quick view text overlay on hover */}
+                        <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-10">
+                          <span className="px-5 py-2.5 rounded-full bg-black/70 text-white text-xs sm:text-sm font-bold backdrop-blur-md border border-white/20 flex items-center gap-2 transform translate-y-3 group-hover:translate-y-0 transition-all duration-300 shadow-xl">
+                            <Search size={15} className="text-purple-300" /> Voir les images
+                          </span>
+                        </div>
+                      </div>
+
+                      {/* Content */}
+                      <div className="p-6">
+                        <div className="flex justify-between items-start gap-3 mb-3">
+                          <h3
+                            className="text-lg sm:text-xl font-extrabold leading-snug tracking-tight transition-colors duration-300 group-hover:text-blue-400"
+                            style={{ color: theme === 'dark' ? '#f1f5f9' : '#0f172a' }}
+                          >
+                            {project.title}
+                          </h3>
+
+                          {/* Action Links */}
+                          <div className="flex gap-1.5 shrink-0">
+                            <a
+                              href={project.github}
+                              onClick={(e) => e.stopPropagation()}
+                              className={`flex items-center justify-center w-8 h-8 rounded-full transition-all duration-300 hover:scale-110 border ${
+                                theme === 'dark'
+                                  ? 'bg-white/5 hover:bg-white/10 text-gray-300 border-white/10'
+                                  : 'bg-black/5 hover:bg-black/10 text-gray-700 border-black/10'
+                              }`}
+                            >
+                              <Github size={14} />
+                            </a>
+                            <button
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                setSelectedProjectScreenshots(project.screenshots);
+                                setCurrentScreenshotIndex(0);
+                              }}
+                              className={`flex items-center justify-center w-8 h-8 rounded-full transition-all duration-300 hover:scale-110 border ${
+                                theme === 'dark'
+                                  ? 'bg-white/5 hover:bg-white/10 text-gray-300 border-white/10'
+                                  : 'bg-black/5 hover:bg-black/10 text-gray-700 border-black/10'
+                              }`}
+                            >
+                              <ExternalLink size={14} />
+                            </button>
+                          </div>
+                        </div>
+
+                        <p className={`text-xs sm:text-sm leading-relaxed mb-5 ${theme === 'dark' ? 'text-gray-300' : 'text-gray-600'}`}>
+                          {project.description}
+                        </p>
+                      </div>
+                    </div>
+
+                    {/* Tech stack */}
+                    <div className="px-6 pb-6 pt-0">
+                      <div className={`pt-4 border-t ${theme === 'dark' ? 'border-white/8' : 'border-gray-100'}`}>
+                        <div className="flex flex-wrap gap-1.5">
+                          {project.tech.map((tech, tIdx) => (
+                            <span
+                              key={tIdx}
+                              className="px-2.5 py-1 text-[11px] font-semibold rounded-lg border transition-all duration-200 hover:scale-105"
+                              style={{
+                                background: `linear-gradient(135deg, ${clr.from}14, ${clr.to}14)`,
+                                borderColor: `${clr.from}40`,
+                                color: theme === 'dark' ? '#f1f5f9' : '#0f172a',
+                              }}
+                            >
+                              {tech}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
 
           <div className="mt-16 text-center">
             <button
               onClick={() => {
                 setShowAllProjects(true);
-                window.scrollTo({ top: 0, behavior: 'smooth' });
+                window.scrollTo(0, 0);
               }}
-              className="group px-10 py-4 rounded-full bg-gradient-to-r from-blue-600/20 to-purple-600/20 border border-blue-500/30 text-blue-400 font-semibold hover:from-blue-600 hover:to-purple-600 hover:text-white transition-all duration-500 hover:shadow-2xl hover:shadow-purple-500/30 hover:-translate-y-2 flex items-center gap-3 mx-auto"
+              className="group px-8 py-4 rounded-2xl text-white font-bold text-sm tracking-wide transition-all duration-300 hover:scale-105 hover:shadow-xl shadow-lg inline-flex items-center gap-2.5 cursor-pointer"
+              style={{
+                background: 'linear-gradient(135deg, #3b82f6 0%, #8b5cf6 50%, #ec4899 100%)',
+                boxShadow: '0 10px 30px rgba(139,92,246,0.35)',
+              }}
             >
-              Voir Tous les Projets
-              <ExternalLink size={20} className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform duration-300" />
+              <span>Voir Tous les Projets</span>
+              <ExternalLink size={17} className="group-hover:translate-x-1 transition-transform duration-300" />
             </button>
           </div>
         </div>
       </section>
 
-      {/* Formation Section */}
-      <section id="formation" className={`py-24 px-4 ${theme === 'dark' ? 'bg-gray-900/50' : 'bg-gray-100/50'}`}>
-        <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-16">
-            <div className="inline-flex items-center gap-2 px-4 py-2 mb-4 rounded-full bg-gradient-to-r from-green-500/20 to-emerald-500/20 border border-green-500/30">
-              <Award className="w-4 h-4 text-green-400" />
-              <span className="text-sm font-medium text-green-400">Éducation & Certifications</span>
+      {/* Eduction Timeline */}
+      <section id="experience" className={`py-28 px-4 sm:px-6 relative overflow-hidden ${theme === 'dark' ? 'bg-gradient-to-b from-gray-900 via-[#0d0d1a] to-gray-900' : 'bg-gradient-to-b from-gray-50 via-slate-100/60 to-gray-50'}`}>
+
+        {/* Ambient Glows */}
+        <div className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-blue-600/8 rounded-full blur-[140px] pointer-events-none" />
+        <div className="absolute bottom-0 right-1/4 w-[500px] h-[500px] bg-purple-600/8 rounded-full blur-[140px] pointer-events-none" />
+
+        <div className="max-w-4xl mx-auto relative z-10">
+          <div className="text-center mb-20">
+            <div
+              className="inline-flex items-center gap-2 px-5 py-2.5 mb-5 rounded-full border backdrop-blur-xl"
+              style={{ background: 'rgba(139,92,246,0.08)', borderColor: 'rgba(139,92,246,0.25)', boxShadow: '0 0 30px rgba(139,92,246,0.1)' }}
+            >
+              <Clock className="w-4 h-4 text-purple-400" />
+              <span className="text-xs font-bold tracking-widest uppercase text-purple-400">Jalons Éducatifs</span>
             </div>
-            <h2 className="text-4xl sm:text-5xl font-bold mb-4">Ma Formation</h2>
-            <p className="text-lg text-gray-400 max-w-2xl mx-auto">
+            <h2
+              className="text-4xl sm:text-5xl lg:text-6xl font-black mb-5 tracking-tight"
+              style={{ background: 'linear-gradient(135deg, #ffffff 0%, #c4b5fd 50%, #93c5fd 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}
+            >
+              Parcours Professionnel
+            </h2>
+            <p className="text-base text-gray-400 max-w-xl mx-auto leading-relaxed">
+              Évolution académique et jalons de formation d'excellence
+            </p>
+          </div>
+
+          <div className="relative">
+            <div
+              className="absolute left-0 md:left-1/2 transform md:-translate-x-1/2 h-full w-0.5"
+              style={{
+                background: theme === 'dark'
+                  ? 'linear-gradient(to bottom, transparent, rgba(59,130,246,0.4) 15%, rgba(168,85,247,0.4) 85%, transparent)'
+                  : 'linear-gradient(to bottom, transparent, rgba(59,130,246,0.3) 15%, rgba(168,85,247,0.3) 85%, transparent)',
+              }}
+            />
+
+            {experience.map((item, index) => {
+              const clr = index === 0
+                ? { from: '#06b6d4', to: '#3b82f6' }
+                : index === 1
+                  ? { from: '#a855f7', to: '#ec4899' }
+                  : { from: '#3b82f6', to: '#8b5cf6' };
+
+              return (
+                <div
+                  key={index}
+                  className={`relative mb-12 ${index % 2 === 0 ? 'md:pr-12 md:text-right' : 'md:pl-12 md:ml-auto'} group`}
+                >
+                  {/* Outer hover ring */}
+                  <div
+                    className="absolute -inset-px rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
+                    style={{ border: `1px solid ${clr.from}50`, background: `linear-gradient(135deg, ${clr.from}10, ${clr.to}10)` }}
+                  />
+
+                  {/* Card Body */}
+                  <div
+                    className="relative rounded-3xl overflow-hidden p-7 sm:p-8 ml-8 md:ml-0 transition-all duration-500 group-hover:-translate-y-1.5"
+                    style={{
+                      background: theme === 'dark' ? 'rgba(10,10,22,0.75)' : 'rgba(255,255,255,0.92)',
+                      backdropFilter: 'blur(28px)',
+                      border: theme === 'dark' ? '1px solid rgba(255,255,255,0.07)' : '1px solid rgba(0,0,0,0.06)',
+                      boxShadow: `0 20px 50px rgba(0,0,0,${theme === 'dark' ? '0.4' : '0.08'}), inset 0 1px 0 rgba(255,255,255,0.05)`,
+                    }}
+                  >
+                    {/* Top Accent bar */}
+                    <div
+                      className="absolute top-0 left-6 right-6 h-0.5 rounded-full opacity-60 group-hover:opacity-100 transition-opacity duration-500"
+                      style={{ background: `linear-gradient(to right, ${clr.from}, ${clr.to})` }}
+                    />
+
+                    {/* Shimmer sweep */}
+                    <div className="absolute inset-0 pointer-events-none overflow-hidden rounded-3xl">
+                      <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/[0.03] to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-[1200ms] ease-out" />
+                    </div>
+
+                    <div className={`flex flex-wrap items-center gap-2 mb-4 ${index % 2 === 0 ? 'md:justify-end' : 'justify-start'}`}>
+                      <span
+                        className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold border"
+                        style={{
+                          background: `linear-gradient(135deg, ${clr.from}15, ${clr.to}15)`,
+                          borderColor: `${clr.from}30`,
+                          color: clr.from,
+                        }}
+                      >
+                        <Calendar size={11} />
+                        {item.year}
+                      </span>
+                      <span className="px-2.5 py-1 rounded-full text-[10px] font-black uppercase tracking-wider bg-purple-500/10 text-purple-400 border border-purple-500/20">
+                        Éducation
+                      </span>
+                    </div>
+
+                    <h3
+                      className="text-xl sm:text-2xl font-extrabold mb-2 leading-snug tracking-tight transition-colors duration-300 group-hover:text-blue-400"
+                      style={{ color: theme === 'dark' ? '#f1f5f9' : '#0f172a' }}
+                    >
+                      {item.role}
+                    </h3>
+                    <p className="text-sm font-bold text-purple-400 mb-4">{item.company}</p>
+                    <p className={`text-xs sm:text-sm mb-5 leading-relaxed ${theme === 'dark' ? 'text-gray-300' : 'text-gray-600'}`}>
+                      {item.description}
+                    </p>
+
+                    <ul className={`space-y-2 ${index % 2 === 0 ? 'md:items-end' : ''}`}>
+                      {item.achievements?.map((achievement, i) => (
+                        <li key={i} className={`flex items-start gap-2.5 ${index % 2 === 0 ? 'md:flex-row-reverse md:text-right' : ''}`}>
+                          <div
+                            className="mt-1 w-2 h-2 rounded-full shrink-0"
+                            style={{ background: `linear-gradient(135deg, ${clr.from}, ${clr.to})` }}
+                          />
+                          <span className="text-xs sm:text-sm text-gray-400">{achievement}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+
+                  {/* Node Dot on Timeline */}
+                  <div
+                    className={`absolute left-0 md:left-1/2 top-8 transform md:-translate-x-1/2 w-4 h-4 rounded-full border-2 transition-all duration-500 group-hover:scale-125`}
+                    style={{
+                      background: clr.from,
+                      borderColor: '#ffffff',
+                      boxShadow: `0 0 16px ${clr.from}`,
+                    }}
+                  />
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
+      {/* Formation / Certifications Section */}
+      <section id="formation" className={`py-28 px-4 sm:px-6 relative overflow-hidden ${theme === 'dark' ? 'bg-gradient-to-b from-gray-900 via-[#0d0d1a] to-gray-900' : 'bg-gradient-to-b from-gray-50 via-slate-100/60 to-gray-50'}`}>
+
+        {/* Ambient Glows */}
+        <div className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-blue-600/8 rounded-full blur-[140px] pointer-events-none" />
+        <div className="absolute bottom-0 right-1/4 w-[500px] h-[500px] bg-purple-600/8 rounded-full blur-[140px] pointer-events-none" />
+
+        <div className="max-w-6xl mx-auto relative z-10">
+
+          {/* Header */}
+          <div className="text-center mb-20">
+            <div
+              className="inline-flex items-center gap-2 px-5 py-2.5 mb-5 rounded-full border backdrop-blur-xl"
+              style={{ background: 'rgba(139,92,246,0.08)', borderColor: 'rgba(139,92,246,0.25)', boxShadow: '0 0 30px rgba(139,92,246,0.1)' }}
+            >
+              <Award className="w-4 h-4 text-purple-400" />
+              <span className="text-xs font-bold tracking-widest uppercase text-purple-400">Éducation & Certifications</span>
+            </div>
+            <h2
+              className="text-4xl sm:text-5xl lg:text-6xl font-black mb-5 tracking-tight"
+              style={{ background: 'linear-gradient(135deg, #ffffff 0%, #c4b5fd 50%, #93c5fd 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}
+            >
+              Ma Formation
+            </h2>
+            <p className="text-base text-gray-400 max-w-xl mx-auto leading-relaxed">
               Apprentissage continu et développement professionnel via des formations certifiées
             </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {formations.map((formation) => (
-              <div
-                key={formation.id}
-                className={`group ${cardClass} rounded-2xl overflow-hidden border ${borderClass} shadow-xl hover:shadow-2xl transition-all duration-500 hover:-translate-y-2`}
-                onClick={() => setSelectedFormation(formation)}
-              >
-                <div className="relative h-48 overflow-hidden cursor-pointer">
-                  <img
-                    src={formation.image}
-                    alt={formation.title}
-                    className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent" />
-                  <div className="absolute top-4 right-4">
-                    <span className="px-3 py-1 rounded-full bg-gradient-to-r from-blue-500/90 to-purple-600/90 text-white text-sm font-medium">
-                      {formation.date}
-                    </span>
-                  </div>
-                </div>
+            {formations.map((formation, index) => {
+              const palette = [
+                { from: '#06b6d4', to: '#3b82f6', glow: 'rgba(6,182,212,0.25)' },
+                { from: '#f97316', to: '#eab308', glow: 'rgba(249,115,22,0.25)' },
+                { from: '#3b82f6', to: '#6366f1', glow: 'rgba(59,130,246,0.25)' },
+                { from: '#a855f7', to: '#ec4899', glow: 'rgba(168,85,247,0.25)' },
+                { from: '#10b981', to: '#06b6d4', glow: 'rgba(16,185,129,0.25)' },
+                { from: '#8b5cf6', to: '#d946ef', glow: 'rgba(139,92,246,0.25)' },
+              ];
+              const clr = palette[index % palette.length];
 
-                <div className="p-6">
-                  <h3 className="text-xl font-bold mb-2 group-hover:text-blue-400 transition-colors cursor-pointer">
-                    {formation.title}
-                  </h3>
-                  <p className="text-purple-400 font-semibold mb-4">
-                    {formation.issuer}
-                  </p>
-
-                  <div className="flex flex-wrap gap-2 mb-4">
-                    {formation.skills.map((skill, index) => (
-                      <span
-                        key={index}
-                        className={`px-3 py-1 text-xs rounded-full ${theme === 'dark'
-                          ? 'bg-gray-800/70 text-gray-300'
-                          : 'bg-gray-100 text-gray-700'
-                          }`}
-                      >
-                        {skill}
-                      </span>
-                    ))}
-                  </div>
-
-                  <button
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      if (formation.certificateUrl) {
-                        window.open(formation.certificateUrl, '_blank');
-                      } else {
-                        setSelectedFormation(formation);
-                      }
+              return (
+                <div
+                  key={formation.id}
+                  className="group relative transition-all duration-500 hover:-translate-y-2 flex cursor-pointer"
+                  onClick={() => setSelectedFormation(formation)}
+                >
+                  {/* Outer hover ring */}
+                  <div
+                    className="absolute -inset-px rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
+                    style={{
+                      border: `1px solid ${clr.from}60`,
+                      background: `linear-gradient(135deg, ${clr.from}15, ${clr.to}15)`,
                     }}
-                    className="w-full py-2 rounded-lg bg-gradient-to-r from-blue-500/10 to-purple-500/10 text-blue-400 hover:from-blue-500/20 hover:to-purple-500/20 transition-all duration-300 font-medium"
+                  />
+
+                  {/* Card body */}
+                  <div
+                    className="relative w-full rounded-3xl overflow-hidden flex flex-col justify-between"
+                    style={{
+                      background: theme === 'dark' ? 'rgba(10,10,22,0.75)' : 'rgba(255,255,255,0.92)',
+                      backdropFilter: 'blur(28px)',
+                      border: theme === 'dark' ? '1px solid rgba(255,255,255,0.07)' : '1px solid rgba(0,0,0,0.06)',
+                      boxShadow: `0 20px 50px rgba(0,0,0,${theme === 'dark' ? '0.4' : '0.08'}), inset 0 1px 0 rgba(255,255,255,0.05)`,
+                    }}
                   >
-                    Voir le Certificat
-                  </button>
-                </div>
-              </div>
-            ))}
-          </div>
+                    {/* Top accent bar */}
+                    <div
+                      className="absolute top-0 left-6 right-6 h-0.5 rounded-full opacity-60 group-hover:opacity-100 transition-opacity duration-500 z-20"
+                      style={{ background: `linear-gradient(to right, ${clr.from}, ${clr.to})` }}
+                    />
 
+                    {/* Shimmer sweep */}
+                    <div className="absolute inset-0 pointer-events-none overflow-hidden rounded-3xl z-20">
+                      <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/[0.04] to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-[1200ms] ease-out" />
+                    </div>
 
-        </div>
-      </section>
+                    <div>
+                      {/* Image Header */}
+                      <div className="relative h-48 overflow-hidden">
+                        <img
+                          src={formation.image}
+                          alt={formation.title}
+                          className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700 ease-out"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />
 
-      {/* Eduction Timeline */}
-      <section id="experience" className={`py-24 px-4 ${theme === 'dark' ? 'bg-gray-900/50' : 'bg-gray-100/50'} relative`}>
-        <div className="max-w-4xl mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl sm:text-5xl font-bold mb-4">Parcours Professionnel</h2>
-            <p className="text-lg text-gray-400 max-w-2xl mx-auto">
-              Évolution professionnelle et jalons éducatifs
-            </p>
-          </div>
+                        {/* Date badge */}
+                        <div className="absolute top-4 right-4 z-10">
+                          <span
+                            className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold text-white backdrop-blur-md border border-white/20 shadow-lg"
+                            style={{ background: 'rgba(0, 0, 0, 0.55)' }}
+                          >
+                            <Calendar size={12} className="text-purple-300" />
+                            {formation.date}
+                          </span>
+                        </div>
+                      </div>
 
-          <div className="relative">
-            <div className={`absolute left-0 md:left-1/2 transform md:-translate-x-1/2 h-full w-0.5 ${theme === 'dark' ? 'bg-gradient-to-b from-blue-500/30 via-purple-500/30 to-pink-500/30' : 'bg-gray-300'
-              }`} />
+                      {/* Card Content */}
+                      <div className="p-6">
+                        <h3
+                          className="text-lg sm:text-xl font-extrabold mb-2 leading-snug tracking-tight transition-colors duration-300 group-hover:text-blue-400"
+                          style={{ color: theme === 'dark' ? '#f1f5f9' : '#0f172a' }}
+                        >
+                          {formation.title}
+                        </h3>
 
-            {experience.map((item, index) => (
-              <div
-                key={index}
-                className={`relative mb-12 ${index % 2 === 0 ? 'md:pr-1/2 md:text-right' : 'md:pl-1/2 md:ml-auto'
-                  } group`}
-              >
-                <div className={`${cardClass} rounded-2xl p-8 shadow-lg ml-8 md:ml-0 border ${borderClass} hover:shadow-2xl transition-all duration-300 hover:-translate-y-1`}>
-                  <div className="flex justify-between items-start mb-4">
-                    <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-gradient-to-r from-blue-500/20 to-purple-500/20 text-blue-400 text-sm font-medium">
-                      {item.year}
-                    </span>
-                    <span className="px-3 py-1 rounded-full bg-gradient-to-r from-purple-500/20 to-pink-500/20 text-purple-400 text-sm font-medium">
-                      Éducation
-                    </span>
+                        <p
+                          className="text-xs sm:text-sm font-bold mb-4 flex items-center gap-1.5"
+                          style={{ color: clr.from }}
+                        >
+                          <Building2 size={14} />
+                          {formation.issuer}
+                        </p>
+
+                        <div className="flex flex-wrap gap-1.5 mb-6">
+                          {formation.skills.map((skill, sIdx) => (
+                            <span
+                              key={sIdx}
+                              className={`px-2.5 py-1 text-[11px] font-semibold rounded-lg border transition-all duration-200 hover:scale-105 ${
+                                theme === 'dark'
+                                  ? 'bg-white/5 border-white/10 text-gray-300'
+                                  : 'bg-black/5 border-black/10 text-gray-700'
+                              }`}
+                            >
+                              {skill}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Action Button */}
+                    <div className="px-6 pb-6 pt-0">
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          if (formation.certificateUrl) {
+                            window.open(formation.certificateUrl, '_blank');
+                          } else {
+                            setSelectedFormation(formation);
+                          }
+                        }}
+                        className="w-full py-2.5 px-4 rounded-xl text-xs sm:text-sm font-bold flex items-center justify-center gap-2 border transition-all duration-300 hover:scale-[1.02] shadow-sm"
+                        style={{
+                          background: `linear-gradient(135deg, ${clr.from}18, ${clr.to}18)`,
+                          borderColor: `${clr.from}40`,
+                          color: theme === 'dark' ? '#e2e8f0' : '#1e293b',
+                        }}
+                      >
+                        <Search size={14} className="text-purple-400" />
+                        <span>Voir le Certificat</span>
+                      </button>
+                    </div>
                   </div>
-
-                  <h3 className="text-2xl font-bold mt-2 mb-2 group-hover:text-blue-400 transition-colors">
-                    {item.role}
-                  </h3>
-                  <p className="text-lg text-purple-400 font-semibold mb-4">{item.company}</p>
-                  <p className={`mb-4 ${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'}`}>
-                    {item.description}
-                  </p>
-
-                  <ul className="space-y-2">
-                    {item.achievements?.map((achievement, i) => (
-                      <li key={i} className="flex items-start gap-2">
-                        <div className="w-1.5 h-1.5 rounded-full bg-blue-400 mt-2" />
-                        <span className="text-sm text-gray-400">{achievement}</span>
-                      </li>
-                    ))}
-                  </ul>
                 </div>
-
-                <div className={`absolute left-0 md:left-1/2 top-8 transform md:-translate-x-1/2 w-4 h-4 rounded-full ${theme === 'dark' ? 'bg-gray-800' : 'bg-gray-100'
-                  } border-4 border-blue-500 group-hover:scale-125 group-hover:shadow-lg group-hover:shadow-blue-500/50 transition-all duration-300`} />
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
       </section>
-
-
 
       {/* Contact Section */}
-      <section id="contact" className={`py-24 px-4 relative ${theme === 'dark' ? 'bg-gray-900/50' : 'bg-gray-100/50'}`}>
-        <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl sm:text-5xl font-bold mb-4">Contactez-moi</h2>
-            <p className="text-lg text-gray-400 max-w-2xl mx-auto">
+      <section id="contact" className={`py-28 px-4 sm:px-6 relative overflow-hidden ${theme === 'dark' ? 'bg-gradient-to-b from-gray-900 via-[#0d0d1a] to-[#080811]' : 'bg-gradient-to-b from-gray-50 via-slate-100/60 to-gray-100'}`}>
+
+        {/* Ambient Glows */}
+        <div className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-blue-600/8 rounded-full blur-[140px] pointer-events-none" />
+        <div className="absolute bottom-0 right-1/4 w-[500px] h-[500px] bg-purple-600/8 rounded-full blur-[140px] pointer-events-none" />
+
+        <div className="max-w-6xl mx-auto relative z-10">
+
+          {/* Header */}
+          <div className="text-center mb-20">
+            <div
+              className="inline-flex items-center gap-2 px-5 py-2.5 mb-5 rounded-full border backdrop-blur-xl"
+              style={{ background: 'rgba(139,92,246,0.08)', borderColor: 'rgba(139,92,246,0.25)', boxShadow: '0 0 30px rgba(139,92,246,0.1)' }}
+            >
+              <Mail className="w-4 h-4 text-purple-400" />
+              <span className="text-xs font-bold tracking-widest uppercase text-purple-400">Contactez-moi</span>
+            </div>
+            <h2
+              className="text-4xl sm:text-5xl lg:text-6xl font-black mb-5 tracking-tight"
+              style={{ background: 'linear-gradient(135deg, #ffffff 0%, #c4b5fd 50%, #93c5fd 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}
+            >
+              Contactez-moi
+            </h2>
+            <p className="text-base text-gray-400 max-w-xl mx-auto leading-relaxed">
               Prêt à concrétiser votre vision ? Parlons de votre projet
             </p>
           </div>
 
-          <div className="grid lg:grid-cols-2 gap-12">
-            <div>
-              <h3 className="text-3xl font-bold mb-6">
-                Commencer un <span className="text-blue-400">Projet</span>
-              </h3>
-              <p className={`text-lg mb-8 ${theme === 'dark' ? 'text-gray-400' : 'text-gray-600'} leading-relaxed`}>
-                Je suis toujours intéressé par de nouveaux projets et opportunités.
-                N'hésitez pas à me contacter pour discuter de votre projet !
-              </p>
+          <div className="grid lg:grid-cols-2 gap-8 items-stretch">
 
-              <div className="space-y-6">
-                <a
-                  href="mailto:ouaben.mohamed@example.com"
-                  className="flex items-center gap-4 p-4 rounded-xl hover:bg-gray-800/50 transition-all duration-300 group"
-                >
-                  <div className="p-3 rounded-lg bg-gradient-to-r from-blue-500/20 to-blue-600/20 group-hover:from-blue-500/30 group-hover:to-blue-600/30">
-                    <Mail className="text-blue-400" size={24} />
-                  </div>
-                  <div>
-                    <p className="font-semibold">Email</p>
-                    <p className="text-sm text-gray-400">ouabenmohamed74@gmail.com</p>
-                  </div>
-                </a>
+            {/* Left Card: Commencer un Projet - border removed */}
+            <div className="group relative transition-all duration-500 hover:-translate-y-1.5 flex">
+              <div
+                className="absolute -inset-px rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
+                style={{ background: 'linear-gradient(135deg, rgba(6,182,212,0.12), rgba(59,130,246,0.12))' }}
+              />
 
-                <a
-                  href="https://github.com/OUABEN"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center gap-4 p-4 rounded-xl hover:bg-gray-800/50 transition-all duration-300 group"
-                >
-                  <div className="p-3 rounded-lg bg-gradient-to-r from-gray-500/20 to-gray-600/20 group-hover:from-gray-500/30 group-hover:to-gray-600/30">
-                    <Github className="text-gray-400" size={24} />
-                  </div>
-                  <div>
-                    <p className="font-semibold">GitHub</p>
-                    <p className="text-sm text-gray-400">https://github.com/OUABEN</p>
-                  </div>
-                </a>
+              <div
+                className="relative w-full rounded-3xl overflow-hidden p-7 sm:p-9 flex flex-col justify-between"
+                style={{
+                  background: theme === 'dark' ? 'rgba(10,10,22,0.75)' : 'rgba(255,255,255,0.92)',
+                  backdropFilter: 'blur(28px)',
+                  boxShadow: `0 24px 64px rgba(0,0,0,${theme === 'dark' ? '0.45' : '0.08'})`,
+                }}
+              >
+                {/* Shimmer sweep */}
+                <div className="absolute inset-0 pointer-events-none overflow-hidden rounded-3xl">
+                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/[0.03] to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-[1200ms] ease-out" />
+                </div>
 
-                <a
-                  href="https://linkedin.com/in/mohamed-ouaben"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center gap-4 p-4 rounded-xl hover:bg-gray-800/50 transition-all duration-300 group"
-                >
-                  <div className="p-3 rounded-lg bg-gradient-to-r from-blue-600/20 to-blue-700/20 group-hover:from-blue-600/30 group-hover:to-blue-700/30">
-                    <Linkedin className="text-blue-500" size={24} />
+                <div className="relative z-10">
+                  <h3
+                    className="text-2xl sm:text-3xl font-extrabold mb-4 leading-snug tracking-tight"
+                    style={{ color: theme === 'dark' ? '#f1f5f9' : '#0f172a' }}
+                  >
+                    Commencer un <span className="text-blue-400">Projet</span>
+                  </h3>
+                  <p className={`text-sm sm:text-base mb-8 leading-relaxed ${theme === 'dark' ? 'text-gray-300' : 'text-gray-600'}`}>
+                    Je suis toujours intéressé par de nouveaux projets et opportunités. N'hésitez pas à me contacter pour discuter de votre projet !
+                  </p>
+
+                  <div className="space-y-4">
+                    {/* Email Card */}
+                    <a
+                      href="mailto:ouabenmohamed74@gmail.com"
+                      className="flex items-center gap-4 p-4 rounded-2xl border transition-all duration-300 hover:scale-[1.02] group/link"
+                      style={{
+                        background: theme === 'dark' ? 'rgba(59,130,246,0.06)' : 'rgba(59,130,246,0.04)',
+                        borderColor: 'rgba(59,130,246,0.2)',
+                      }}
+                    >
+                      <div className="p-3 rounded-xl bg-gradient-to-br from-blue-500/20 to-cyan-500/20 border border-blue-500/30 text-blue-400 shrink-0 group-hover/link:scale-110 transition-transform">
+                        <Mail size={22} />
+                      </div>
+                      <div className="min-w-0">
+                        <p className={`font-bold text-xs uppercase tracking-wider text-gray-400`}>Email</p>
+                        <p className={`text-sm sm:text-base font-semibold truncate ${theme === 'dark' ? 'text-gray-100 group-hover/link:text-blue-400' : 'text-gray-900 group-hover/link:text-blue-600'} transition-colors`}>
+                          ouabenmohamed74@gmail.com
+                        </p>
+                      </div>
+                    </a>
+
+                    {/* GitHub Card */}
+                    <a
+                      href="https://github.com/OUABEN"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center gap-4 p-4 rounded-2xl border transition-all duration-300 hover:scale-[1.02] group/link"
+                      style={{
+                        background: theme === 'dark' ? 'rgba(168,85,247,0.06)' : 'rgba(168,85,247,0.04)',
+                        borderColor: 'rgba(168,85,247,0.2)',
+                      }}
+                    >
+                      <div className="p-3 rounded-xl bg-gradient-to-br from-purple-500/20 to-pink-500/20 border border-purple-500/30 text-purple-400 shrink-0 group-hover/link:scale-110 transition-transform">
+                        <Github size={22} />
+                      </div>
+                      <div className="min-w-0">
+                        <p className={`font-bold text-xs uppercase tracking-wider text-gray-400`}>GitHub</p>
+                        <p className={`text-sm sm:text-base font-semibold truncate ${theme === 'dark' ? 'text-gray-100 group-hover/link:text-purple-400' : 'text-gray-900 group-hover/link:text-purple-600'} transition-colors`}>
+                          https://github.com/OUABEN
+                        </p>
+                      </div>
+                    </a>
+
+                    {/* LinkedIn Card */}
+                    <a
+                      href="https://linkedin.com/in/mohamed-ouaben"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center gap-4 p-4 rounded-2xl border transition-all duration-300 hover:scale-[1.02] group/link"
+                      style={{
+                        background: theme === 'dark' ? 'rgba(59,130,246,0.06)' : 'rgba(59,130,246,0.04)',
+                        borderColor: 'rgba(59,130,246,0.2)',
+                      }}
+                    >
+                      <div className="p-3 rounded-xl bg-gradient-to-br from-blue-600/20 to-indigo-500/20 border border-blue-500/30 text-blue-400 shrink-0 group-hover/link:scale-110 transition-transform">
+                        <Linkedin size={22} />
+                      </div>
+                      <div className="min-w-0">
+                        <p className={`font-bold text-xs uppercase tracking-wider text-gray-400`}>LinkedIn</p>
+                        <p className={`text-sm sm:text-base font-semibold truncate ${theme === 'dark' ? 'text-gray-100 group-hover/link:text-blue-400' : 'text-gray-900 group-hover/link:text-blue-600'} transition-colors`}>
+                          linkedin.com/in/mohamed-ouaben
+                        </p>
+                      </div>
+                    </a>
                   </div>
-                  <div>
-                    <p className="font-semibold">LinkedIn</p>
-                    <p className="text-sm text-gray-400">linkedin.com/in/mohamed-ouaben</p>
-                  </div>
-                </a>
+                </div>
               </div>
             </div>
 
-            <div className={`relative overflow-hidden rounded-3xl p-8 shadow-2xl transition-all duration-500`}
-                 style={{
-                   background: theme === 'dark' ? 'rgba(20, 20, 30, 0.4)' : 'rgba(255, 255, 255, 0.6)',
-                   backdropFilter: 'blur(20px)',
-                   WebkitBackdropFilter: 'blur(20px)',
-                   border: theme === 'dark' ? '1px solid rgba(255, 255, 255, 0.08)' : '1px solid rgba(0, 0, 0, 0.08)',
-                 }}>
-              
-              {/* Glassmorphism gradient background */}
-              <div className="absolute top-0 right-0 w-64 h-64 bg-blue-500/10 rounded-full blur-3xl -z-10" />
-              <div className="absolute bottom-0 left-0 w-64 h-64 bg-purple-500/10 rounded-full blur-3xl -z-10" />
+            {/* Right Card: Envoyer un Message */}
+            <div className="group relative transition-all duration-500 hover:-translate-y-1.5 flex">
+              <div
+                className="absolute -inset-px rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
+                style={{ border: '1px solid rgba(168,85,247,0.5)', background: 'linear-gradient(135deg, rgba(168,85,247,0.1), rgba(236,72,153,0.1))' }}
+              />
 
-              <h3 className={`text-2xl font-bold mb-8 ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>Envoyer un Message</h3>
-
-              <form 
-                name="contact" 
-                method="POST" 
-                data-netlify="true" 
-                netlify-honeypot="bot-field"
-                onSubmit={handleSubmit}
-                className="space-y-6 relative z-10"
+              <div
+                className="relative w-full rounded-3xl overflow-hidden p-7 sm:p-9 flex flex-col justify-between"
+                style={{
+                  background: theme === 'dark' ? 'rgba(10,10,22,0.75)' : 'rgba(255,255,255,0.92)',
+                  backdropFilter: 'blur(28px)',
+                  border: theme === 'dark' ? '1px solid rgba(255,255,255,0.07)' : '1px solid rgba(0,0,0,0.06)',
+                  boxShadow: `0 24px 64px rgba(0,0,0,${theme === 'dark' ? '0.45' : '0.08'}), inset 0 1px 0 rgba(255,255,255,0.05)`,
+                }}
               >
-                <input type="hidden" name="form-name" value="contact" />
-                
-                <p className="hidden">
-                  <label>
-                    Don’t fill this out if you're human: <input name="bot-field" onChange={(e) => setFormData({...formData, 'bot-field': e.target.value})} />
-                  </label>
-                </p>
+                {/* Left Accent bar */}
+                <div
+                  className="absolute left-0 top-0 bottom-0 w-1 group-hover:w-[5px] transition-all duration-500 rounded-l-3xl"
+                  style={{ background: 'linear-gradient(to bottom, #a855f7, #ec4899)' }}
+                />
 
-                <div className="relative group">
-                  <input
-                    type="text"
-                    id="name"
-                    name="name"
-                    required
-                    value={formData.name}
-                    onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                    className={`peer w-full px-4 py-4 rounded-xl border-2 ${
-                      theme === 'dark' 
-                        ? 'bg-gray-900/40 border-gray-700/50 text-white focus:border-blue-500' 
-                        : 'bg-white/50 border-gray-200 text-gray-900 focus:border-blue-500'
-                    } focus:outline-none focus:ring-4 focus:ring-blue-500/10 transition-all duration-300 placeholder-transparent`}
-                    placeholder="John Doe"
-                  />
-                  <label 
-                    htmlFor="name" 
-                    className={`absolute left-4 top-4 text-sm transition-all duration-300 cursor-text
-                      peer-placeholder-shown:text-base peer-placeholder-shown:top-4 
-                      peer-focus:-top-2.5 peer-focus:text-xs peer-focus:px-1
-                      ${formData.name ? '-top-2.5 text-xs px-1' : ''}
-                      ${theme === 'dark' ? 'text-gray-400 peer-focus:text-blue-400' : 'text-gray-500 peer-focus:text-blue-600'}
-                    `}
-                    style={{ background: formData.name ? (theme === 'dark' ? '#151520' : '#ffffff') : 'transparent' }}
-                  >
-                    Nom Complet
-                  </label>
+                {/* Shimmer sweep */}
+                <div className="absolute inset-0 pointer-events-none overflow-hidden rounded-3xl">
+                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/[0.03] to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-[1200ms] ease-out" />
                 </div>
 
-                <div className="relative group">
-                  <input
-                    type="email"
-                    id="email"
-                    name="email"
-                    required
-                    value={formData.email}
-                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                    className={`peer w-full px-4 py-4 rounded-xl border-2 ${
-                      theme === 'dark' 
-                        ? 'bg-gray-900/40 border-gray-700/50 text-white focus:border-blue-500' 
-                        : 'bg-white/50 border-gray-200 text-gray-900 focus:border-blue-500'
-                    } focus:outline-none focus:ring-4 focus:ring-blue-500/10 transition-all duration-300 placeholder-transparent`}
-                    placeholder="john@example.com"
-                  />
-                  <label 
-                    htmlFor="email" 
-                    className={`absolute left-4 top-4 text-sm transition-all duration-300 cursor-text
-                      peer-placeholder-shown:text-base peer-placeholder-shown:top-4 
-                      peer-focus:-top-2.5 peer-focus:text-xs peer-focus:px-1
-                      ${formData.email ? '-top-2.5 text-xs px-1' : ''}
-                      ${theme === 'dark' ? 'text-gray-400 peer-focus:text-blue-400' : 'text-gray-500 peer-focus:text-blue-600'}
-                    `}
-                    style={{ background: formData.email ? (theme === 'dark' ? '#151520' : '#ffffff') : 'transparent' }}
+                <div className="relative z-10 w-full">
+                  <h3
+                    className="text-2xl sm:text-3xl font-extrabold mb-6 tracking-tight"
+                    style={{ color: theme === 'dark' ? '#f1f5f9' : '#0f172a' }}
                   >
-                    Adresse Email
-                  </label>
-                </div>
+                    Envoyer un Message
+                  </h3>
 
-                <div className="relative group">
-                  <textarea
-                    id="message"
-                    name="message"
-                    required
-                    minLength="10"
-                    value={formData.message}
-                    onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                    rows="5"
-                    className={`peer w-full px-4 py-4 rounded-xl border-2 ${
-                      theme === 'dark' 
-                        ? 'bg-gray-900/40 border-gray-700/50 text-white focus:border-blue-500' 
-                        : 'bg-white/50 border-gray-200 text-gray-900 focus:border-blue-500'
-                    } focus:outline-none focus:ring-4 focus:ring-blue-500/10 transition-all duration-300 placeholder-transparent resize-none`}
-                    placeholder="Tell me about your project..."
-                  />
-                  <label 
-                    htmlFor="message" 
-                    className={`absolute left-4 top-4 text-sm transition-all duration-300 cursor-text
-                      peer-placeholder-shown:text-base peer-placeholder-shown:top-4 
-                      peer-focus:-top-2.5 peer-focus:text-xs peer-focus:px-1
-                      ${formData.message ? '-top-2.5 text-xs px-1' : ''}
-                      ${theme === 'dark' ? 'text-gray-400 peer-focus:text-blue-400' : 'text-gray-500 peer-focus:text-blue-600'}
-                    `}
-                    style={{ background: formData.message ? (theme === 'dark' ? '#151520' : '#ffffff') : 'transparent' }}
+                  <form
+                    name="contact"
+                    method="POST"
+                    data-netlify="true"
+                    netlify-honeypot="bot-field"
+                    onSubmit={handleSubmit}
+                    className="space-y-5"
                   >
-                    Votre Message
-                  </label>
+                    <input type="hidden" name="form-name" value="contact" />
+
+                    <p className="hidden">
+                      <label>
+                        Don’t fill this out if you're human:{' '}
+                        <input name="bot-field" onChange={(e) => setFormData({ ...formData, 'bot-field': e.target.value })} />
+                      </label>
+                    </p>
+
+                    <div className="relative group">
+                      <input
+                        type="text"
+                        id="name"
+                        name="name"
+                        required
+                        value={formData.name}
+                        onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                        className={`peer w-full px-4 py-3.5 rounded-2xl border ${
+                          theme === 'dark'
+                            ? 'bg-white/5 border-white/10 text-white focus:border-purple-400 focus:bg-white/[0.08]'
+                            : 'bg-black/5 border-black/10 text-gray-900 focus:border-purple-500 focus:bg-white'
+                        } focus:outline-none focus:ring-4 focus:ring-purple-500/10 transition-all duration-300 placeholder-transparent text-sm font-medium`}
+                        placeholder="John Doe"
+                      />
+                      <label
+                        htmlFor="name"
+                        className={`absolute left-4 top-3.5 text-xs font-semibold transition-all duration-300 cursor-text
+                          peer-placeholder-shown:text-sm peer-placeholder-shown:top-3.5
+                          peer-focus:-top-2.5 peer-focus:text-[11px] peer-focus:px-2
+                          ${formData.name ? '-top-2.5 text-[11px] px-2' : ''}
+                          ${theme === 'dark' ? 'text-gray-400 peer-focus:text-purple-400' : 'text-gray-500 peer-focus:text-purple-600'}
+                        `}
+                        style={{ background: formData.name ? (theme === 'dark' ? '#0d0d1a' : '#ffffff') : 'transparent' }}
+                      >
+                        Nom Complet
+                      </label>
+                    </div>
+
+                    <div className="relative group">
+                      <input
+                        type="email"
+                        id="email"
+                        name="email"
+                        required
+                        value={formData.email}
+                        onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                        className={`peer w-full px-4 py-3.5 rounded-2xl border ${
+                          theme === 'dark'
+                            ? 'bg-white/5 border-white/10 text-white focus:border-purple-400 focus:bg-white/[0.08]'
+                            : 'bg-black/5 border-black/10 text-gray-900 focus:border-purple-500 focus:bg-white'
+                        } focus:outline-none focus:ring-4 focus:ring-purple-500/10 transition-all duration-300 placeholder-transparent text-sm font-medium`}
+                        placeholder="john@example.com"
+                      />
+                      <label
+                        htmlFor="email"
+                        className={`absolute left-4 top-3.5 text-xs font-semibold transition-all duration-300 cursor-text
+                          peer-placeholder-shown:text-sm peer-placeholder-shown:top-3.5
+                          peer-focus:-top-2.5 peer-focus:text-[11px] peer-focus:px-2
+                          ${formData.email ? '-top-2.5 text-[11px] px-2' : ''}
+                          ${theme === 'dark' ? 'text-gray-400 peer-focus:text-purple-400' : 'text-gray-500 peer-focus:text-purple-600'}
+                        `}
+                        style={{ background: formData.email ? (theme === 'dark' ? '#0d0d1a' : '#ffffff') : 'transparent' }}
+                      >
+                        Adresse Email
+                      </label>
+                    </div>
+
+                    <div className="relative group">
+                      <textarea
+                        id="message"
+                        name="message"
+                        required
+                        minLength="10"
+                        value={formData.message}
+                        onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                        rows="4"
+                        className={`peer w-full px-4 py-3.5 rounded-2xl border ${
+                          theme === 'dark'
+                            ? 'bg-white/5 border-white/10 text-white focus:border-purple-400 focus:bg-white/[0.08]'
+                            : 'bg-black/5 border-black/10 text-gray-900 focus:border-purple-500 focus:bg-white'
+                        } focus:outline-none focus:ring-4 focus:ring-purple-500/10 transition-all duration-300 placeholder-transparent resize-none text-sm font-medium`}
+                        placeholder="Tell me about your project..."
+                      />
+                      <label
+                        htmlFor="message"
+                        className={`absolute left-4 top-3.5 text-xs font-semibold transition-all duration-300 cursor-text
+                          peer-placeholder-shown:text-sm peer-placeholder-shown:top-3.5
+                          peer-focus:-top-2.5 peer-focus:text-[11px] peer-focus:px-2
+                          ${formData.message ? '-top-2.5 text-[11px] px-2' : ''}
+                          ${theme === 'dark' ? 'text-gray-400 peer-focus:text-purple-400' : 'text-gray-500 peer-focus:text-purple-600'}
+                        `}
+                        style={{ background: formData.message ? (theme === 'dark' ? '#0d0d1a' : '#ffffff') : 'transparent' }}
+                      >
+                        Votre Message
+                      </label>
+                    </div>
+
+                    {formStatus.message && (
+                      <div
+                        className={`p-4 rounded-2xl text-xs sm:text-sm font-semibold transition-all duration-300 flex items-center gap-3 border ${
+                          formStatus.type === 'success'
+                            ? 'bg-green-500/10 text-green-400 border-green-500/30'
+                            : 'bg-red-500/10 text-red-400 border-red-500/30'
+                        }`}
+                      >
+                        {formStatus.type === 'success' ? <CheckCircle size={18} /> : <AlertCircle size={18} />}
+                        {formStatus.message}
+                      </div>
+                    )}
+
+                    <button
+                      type="submit"
+                      disabled={isSubmitting}
+                      className="w-full py-4 rounded-2xl font-bold tracking-wide text-sm text-white transition-all duration-300 flex items-center justify-center gap-2 hover:scale-[1.02] shadow-lg disabled:opacity-50"
+                      style={{
+                        background: 'linear-gradient(135deg, #3b82f6 0%, #8b5cf6 50%, #ec4899 100%)',
+                        boxShadow: '0 8px 30px rgba(139,92,246,0.35)',
+                      }}
+                    >
+                      {isSubmitting ? (
+                        <>
+                          <Loader2 size={18} className="animate-spin" />
+                          <span>Envoi en cours...</span>
+                        </>
+                      ) : (
+                        <>
+                          <span>Envoyer le Message</span>
+                          <Send size={16} className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
+                        </>
+                      )}
+                    </button>
+                  </form>
                 </div>
-
-                {formStatus.message && (
-                  <div className={`p-4 rounded-xl text-sm font-medium transition-all duration-300 flex items-center gap-3 border ${
-                    formStatus.type === 'success' 
-                      ? 'bg-green-500/10 text-green-400 border-green-500/20' 
-                      : 'bg-red-500/10 text-red-400 border-red-500/20'
-                  }`}>
-                    {formStatus.type === 'success' ? <CheckCircle size={18} /> : <AlertCircle size={18} />}
-                    {formStatus.message}
-                  </div>
-                )}
-
-                <button
-                  type="submit"
-                  disabled={isSubmitting}
-                  className={`w-full py-4 rounded-xl font-bold tracking-wide transition-all duration-300 flex items-center justify-center gap-2 group ${
-                    isSubmitting 
-                      ? 'bg-gray-600 cursor-not-allowed text-gray-300' 
-                      : 'bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white hover:shadow-xl hover:shadow-purple-500/30 hover:-translate-y-1'
-                  }`}
-                >
-                  {isSubmitting ? (
-                    <>
-                      <Loader2 size={20} className="animate-spin" />
-                      Envoi en cours...
-                    </>
-                  ) : (
-                    <>
-                      Envoyer le Message
-                      <Send size={18} className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
-                    </>
-                  )}
-                </button>
-              </form>
+              </div>
             </div>
           </div>
         </div>
       </section>
 
       {/* Footer */}
-      <footer className={`py-12 px-4 border-t ${borderClass}`}>
+      <footer
+        className="py-14 px-4 sm:px-6 relative overflow-hidden"
+        style={{
+          background: theme === 'dark' ? '#07070f' : '#f1f5f9',
+          borderTop: theme === 'dark' ? '1px solid rgba(255,255,255,0.06)' : '1px solid rgba(0,0,0,0.06)',
+        }}
+      >
         <div className="max-w-6xl mx-auto">
           <div className="flex flex-col md:flex-row justify-between items-center gap-8">
-            <div>
-              <div className="text-2xl font-bold bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 bg-clip-text text-transparent mb-2">
+            <div className="text-center md:text-left">
+              <div
+                className="text-2xl sm:text-3xl font-black mb-2 tracking-tight"
+                style={{
+                  background: 'linear-gradient(135deg, #3b82f6 0%, #a855f7 50%, #ec4899 100%)',
+                  WebkitBackgroundClip: 'text',
+                  WebkitTextFillColor: 'transparent',
+                }}
+              >
                 {'<OUABEN />'}
               </div>
-              <p className={`text-sm ${theme === 'dark' ? 'text-gray-500' : 'text-gray-600'}`}>
+              <p className="text-xs sm:text-sm font-semibold text-gray-400">
                 Ingénierie Logicielle – Agadir, Maroc
               </p>
             </div>
 
-            <div className="flex gap-6">
+            <div className="flex gap-4">
               <a
                 href="https://github.com/OUABEN"
                 target="_blank"
                 rel="noopener noreferrer"
-                className={`p-3 rounded-full border ${borderClass} hover:bg-gray-800/50 hover:scale-110 transition-all duration-300`}
+                className={`w-11 h-11 rounded-2xl flex items-center justify-center border transition-all duration-300 hover:scale-110 ${
+                  theme === 'dark'
+                    ? 'bg-white/5 border-white/10 text-gray-300 hover:text-white hover:border-white/30 hover:bg-white/10'
+                    : 'bg-black/5 border-black/10 text-gray-700 hover:text-black hover:border-black/30 hover:bg-black/10'
+                }`}
+                aria-label="GitHub"
               >
-                <Github size={20} />
+                <Github size={18} />
               </a>
               <a
-                href="https://www.linkedin.com/in/mohamed-ouaben-1780a029a/"
+                href="https://linkedin.com/in/mohamed-ouaben"
                 target="_blank"
                 rel="noopener noreferrer"
-                className={`p-3 rounded-full border ${borderClass} hover:bg-gray-800/50 hover:scale-110 transition-all duration-300`}
+                className={`w-11 h-11 rounded-2xl flex items-center justify-center border transition-all duration-300 hover:scale-110 ${
+                  theme === 'dark'
+                    ? 'bg-white/5 border-white/10 text-gray-300 hover:text-blue-400 hover:border-blue-400/40 hover:bg-blue-500/10'
+                    : 'bg-black/5 border-black/10 text-gray-700 hover:text-blue-600 hover:border-blue-600/40 hover:bg-blue-50'
+                }`}
+                aria-label="LinkedIn"
               >
-                <Linkedin size={20} />
+                <Linkedin size={18} />
               </a>
               <a
                 href="mailto:ouabenmohamed74@gmail.com"
-                className={`p-3 rounded-full border ${borderClass} hover:bg-gray-800/50 hover:scale-110 transition-all duration-300`}
+                className={`w-11 h-11 rounded-2xl flex items-center justify-center border transition-all duration-300 hover:scale-110 ${
+                  theme === 'dark'
+                    ? 'bg-white/5 border-white/10 text-gray-300 hover:text-pink-400 hover:border-pink-400/40 hover:bg-pink-500/10'
+                    : 'bg-black/5 border-black/10 text-gray-700 hover:text-pink-600 hover:border-pink-600/40 hover:bg-pink-50'
+                }`}
+                aria-label="Email"
               >
-                <Mail size={20} />
+                <Mail size={18} />
               </a>
             </div>
           </div>
 
-          <div className={`mt-8 pt-8 border-t ${borderClass} text-center`}>
-            <p className={`${theme === 'dark' ? 'text-gray-500' : 'text-gray-600'}`}>
+          <div className="mt-10 pt-8 border-t border-gray-700/20 text-center">
+            <p className="text-xs sm:text-sm font-semibold text-gray-500">
               © {new Date().getFullYear()} OUABEN Mohamed. Tous droits réservés.
             </p>
           </div>
         </div>
       </footer>
-
-      <FormationModal />
     </div>
   );
 };
