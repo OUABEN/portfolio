@@ -44,6 +44,9 @@ import formation3 from "./assets/image/F2.png";
 import formation4 from "./assets/image/F3.png";
 import formation5 from "./assets/image/F1.png";
 import formation6 from "./assets/image/F6.png";
+import formation7 from "./assets/image/cert7.jpeg";
+import formation8 from "./assets/image/cert6.jpeg";
+import formation9 from "./assets/image/cert8.jpeg";
 
 // Project 1 Images
 import Mobile1 from "./assets/image/Mobile1.jpg";
@@ -108,6 +111,33 @@ import projet7_3 from "./assets/image/projet7_3.jpeg";
 import projet7_4 from "./assets/image/projet7_4.jpeg";
 import projet7_5 from "./assets/image/projet7_5.jpeg";
 import projet7_8 from "./assets/image/projet7_8.jpeg";
+
+// Project 10 Images (Royal Air Maroc - Flight Booking)
+import air1 from "./assets/image/air/10_1.jpg";
+import air3 from "./assets/image/air/10_3.png";
+import air4 from "./assets/image/air/10_4.png";
+import air5 from "./assets/image/air/10_5.png";
+import air6 from "./assets/image/air/10_6.png";
+import air7 from "./assets/image/air/10_7.png";
+import air8 from "./assets/image/air/10_8.png";
+
+// Project 11 Images (HR-Maroc - ERP & Paie)
+import hr1 from "./assets/image/hr/11_1.jpeg";
+import hr2 from "./assets/image/hr/11_2.jpeg";
+import hr3 from "./assets/image/hr/11_3.jpeg";
+import hr4 from "./assets/image/hr/11_4.jpeg";
+import hr5 from "./assets/image/hr/11_5.jpeg";
+import hr6 from "./assets/image/hr/11_6.jpeg";
+import hr7 from "./assets/image/hr/11_7.jpeg";
+
+// Project 12 Images (ImmoPro - SaaS Real Estate)
+import immo1 from "./assets/image/emmpo/12_1.jpeg";
+import immo2 from "./assets/image/emmpo/12_2.jpeg";
+import immo3 from "./assets/image/emmpo/12_3.jpeg";
+import immo4 from "./assets/image/emmpo/12_4.jpeg";
+import immo5 from "./assets/image/emmpo/12_5.jpeg";
+import immo6 from "./assets/image/emmpo/12_6.jpeg";
+import immo7 from "./assets/image/emmpo/12_7.jpeg";
 
 // Professional Experience Logos
 import logoAGH from "./assets/image/Logoa_AGH.webp";
@@ -301,6 +331,30 @@ const Portfolio = () => {
       image: formation6,
       skills: ['Machine Learning', 'Python', 'Data Science', 'IBM']
     },
+    {
+      id: 7,
+      title: 'Gestion de Projet Agile',
+      issuer: 'HP LIFE / HP Foundation',
+      date: '26 Oct. 2026',
+      image: formation7,
+      skills: ['Agile', 'Scrum', 'Kanban', 'MVP', 'Gestion de Projet']
+    },
+    {
+      id: 8,
+      title: "L'IA pour les Professionnels",
+      issuer: 'HP LIFE / HP Foundation',
+      date: '26 Oct. 2026',
+      image: formation8,
+      skills: ['Intelligence Artificielle', 'Prompt Engineering', 'Éthique IA', 'Productivité']
+    },
+    {
+      id: 9,
+      title: 'Trello for Beginners',
+      issuer: 'Coursera',
+      date: '18 Sept. 2026',
+      image: formation9,
+      skills: ['Trello', 'Kanban', 'Gestion de Tâches', 'Méthodes Agiles']
+    },
   ];
 
   const skills = {
@@ -352,32 +406,32 @@ const Portfolio = () => {
 
   const projects = [
     {
-      title: 'Luxury E-commerce Android App',
-      description: 'Designed and developed a premium Android e-commerce application focused on luxury watches and artisan fragrances, inspired by Parisian design aesthetics.',
-      tech: ['Kotlin', 'Jetpack Compose', 'MVVM', 'Room Database'],
-      image: Mobile1,
+      title: 'Royal Air Maroc — Réservation de Vols Mobile',
+      description: 'Application mobile complète de réservation de vols inspirée de Royal Air Maroc. Recherche dynamique de vols, sélection interactive des sièges cabine en temps réel, architecture MVVM/Provider et authentification JWT.',
+      tech: ['Flutter', 'Dart', 'Django', 'REST API', 'SQLite', 'JWT'],
+      image: air1,
       github: 'https://github.com/OUABEN',
       live: '#',
       featured: true,
-      screenshots: [Mobile1, Mobile2, Mobile3, Mobile4]
+      screenshots: [air1, air3, air4, air5, air6, air7, air8]
     },
     {
-      title: 'Taylor Swift Lyrics Generator',
-      description: 'Génération automatique de paroles de chansons dans le style de Taylor Swift utilisant un réseau de neurones récurrents (LSTM) et une interface web moderne avec système d\'authentification.',
-      tech: ['Python', 'Flask', 'LSTM', 'MySQL'],
-      image: projet2_1,
+      title: 'HR-Maroc 🇲🇦 — Système ERP RH & Moteur de Paie',
+      description: 'ERP Full-Stack conforme au Code du Travail marocain (Loi n° 65-99). Moteur de paie automatisé (cotisations CNSS/AMO, barème IR progressif), bulletins de paie PDF officiels, télédéclaration Damancom et audit trail.',
+      tech: ['Spring Boot', 'Java 21', 'React', 'TypeScript', 'PostgreSQL', 'Tailwind'],
+      image: hr1,
       github: 'https://github.com/OUABEN',
       live: '#',
-      screenshots: [projet2_1, projet2_2, projet2_3, projet2_4, projet2_5, projet2_6]
+      screenshots: [hr1, hr2, hr3, hr4, hr5, hr6, hr7]
     },
     {
-      title: 'Business Analytics Dashboard',
-      description: 'Built a full-stack analytics platform to monitor and visualize key business metrics through interactive dashboards.',
-      tech: ['React (Vite)', 'Node.js', 'Express', 'MySQL', 'Recharts'],
-      image: projet1_1,
+      title: 'ImmoPro — SaaS Immobilier Méditerranéen',
+      description: 'Plateforme SaaS multi-tenant pour agences immobilières (Maroc & Espagne). Abonnements Stripe, intégration Google Places/Maps, multilingue avec support RTL (Arabe), compression d\'images WebP et sécurité enterprise.',
+      tech: ['React 19', 'Node.js', 'TypeScript', 'PostgreSQL', 'Prisma', 'Stripe'],
+      image: immo1,
       github: 'https://github.com/OUABEN',
       live: '#',
-      screenshots: [projet1_1, projet1_2, projet1_3, projet1_4, projet1_5]
+      screenshots: [immo1, immo2, immo3, immo4, immo5, immo6, immo7]
     },
     {
       title: 'CoWorkingSpace Distributed System',
@@ -389,13 +443,13 @@ const Portfolio = () => {
       screenshots: [projet3_1, projet3_2, projet3_3, projet3_4]
     },
     {
-      title: 'NovaTech Solutions — AI Web App',
-      description: 'Premium full-stack web application combining a modern showcase website and an AI-powered intelligent chatbot.',
-      tech: ['React', 'Vite', 'Node.js', 'Groq API'],
-      image: projet4_1,
+      title: 'Luxury E-commerce Android App',
+      description: 'Designed and developed a premium Android e-commerce application focused on luxury watches and artisan fragrances, inspired by Parisian design aesthetics.',
+      tech: ['Kotlin', 'Jetpack Compose', 'MVVM', 'Room Database'],
+      image: Mobile1,
       github: 'https://github.com/OUABEN',
       live: '#',
-      screenshots: [projet4_1, projet4_2]
+      screenshots: [Mobile1, Mobile2, Mobile3, Mobile4]
     },
     {
       title: 'Data Analyse – Ventes & Livraisons',
@@ -416,6 +470,15 @@ const Portfolio = () => {
       screenshots: [projet7_1, projet7_2, projet7_3, projet7_4, projet7_5, projet7_8]
     },
     {
+      title: 'Taylor Swift Lyrics Generator',
+      description: 'Génération automatique de paroles de chansons dans le style de Taylor Swift utilisant un réseau de neurones récurrents (LSTM) et une interface web moderne avec système d\'authentification.',
+      tech: ['Python', 'Flask', 'LSTM', 'MySQL'],
+      image: projet2_1,
+      github: 'https://github.com/OUABEN',
+      live: '#',
+      screenshots: [projet2_1, projet2_2, projet2_3, projet2_4, projet2_5, projet2_6]
+    },
+    {
       title: 'LHANOUT - Inventory Management',
       description: 'Solution complète de gestion d\'inventaire moderne (Bilingue FR/AR). Tableau de bord analytics, gestion hiérarchique, promotions et sécurité renforcée.',
       tech: ['React', 'Node.js', 'PostgreSQL', 'Tailwind'],
@@ -423,6 +486,24 @@ const Portfolio = () => {
       github: 'https://github.com/OUABEN',
       live: '#',
       screenshots: [projet8_1, projet8_2, projet8_3, projet8_4, projet8_5, projet8_6, projet8_7, projet8_8, projet8_9]
+    },
+    {
+      title: 'Business Analytics Dashboard',
+      description: 'Built a full-stack analytics platform to monitor and visualize key business metrics through interactive dashboards.',
+      tech: ['React (Vite)', 'Node.js', 'Express', 'MySQL', 'Recharts'],
+      image: projet1_1,
+      github: 'https://github.com/OUABEN',
+      live: '#',
+      screenshots: [projet1_1, projet1_2, projet1_3, projet1_4, projet1_5]
+    },
+    {
+      title: 'NovaTech Solutions — AI Web App',
+      description: 'Premium full-stack web application combining a modern showcase website and an AI-powered intelligent chatbot.',
+      tech: ['React', 'Vite', 'Node.js', 'Groq API'],
+      image: projet4_1,
+      github: 'https://github.com/OUABEN',
+      live: '#',
+      screenshots: [projet4_1, projet4_2]
     },
     {
       title: 'Student Management System',
@@ -462,10 +543,10 @@ const Portfolio = () => {
 
 
   const stats = [
-    { label: 'Projets Terminés', value: '9+', icon: <CheckCircle className="w-6 h-6" /> },
+    { label: 'Projets Terminés', value: '12+', icon: <CheckCircle className="w-6 h-6" /> },
     { label: 'Années d\'Études', value: '4+', icon: <Clock className="w-6 h-6" /> },
-    { label: 'Certifications', value: '6+', icon: <Award className="w-6 h-6" /> },
-    { label: 'Technologies', value: '15+', icon: <Zap className="w-6 h-6" /> }
+    { label: 'Certifications', value: '9+', icon: <Award className="w-6 h-6" /> },
+    { label: 'Technologies', value: '18+', icon: <Zap className="w-6 h-6" /> }
   ];
 
   // ===== fin des données =====
@@ -573,7 +654,7 @@ const Portfolio = () => {
   };
 
   const renderAllProjectsView = () => {
-    const categories = ['All', 'React', 'Kotlin', 'Node.js', 'Python', 'Power BI'];
+    const categories = ['All', 'React', 'Spring Boot', 'Flutter', 'Kotlin', 'Node.js', 'Python', 'Power BI'];
 
     const filteredProjects = projects.filter(project => {
       const matchesSearch = project.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
