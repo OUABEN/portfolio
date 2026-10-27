@@ -416,7 +416,7 @@ const Portfolio = () => {
       screenshots: [air1, air3, air4, air5, air6, air7, air8]
     },
     {
-      title: 'HR-Maroc 🇲🇦 — Système ERP RH & Moteur de Paie',
+      title: 'HR-Maroc — Système ERP RH & Moteur de Paie',
       description: 'ERP Full-Stack conforme au Code du Travail marocain (Loi n° 65-99). Moteur de paie automatisé (cotisations CNSS/AMO, barème IR progressif), bulletins de paie PDF officiels, télédéclaration Damancom et audit trail.',
       tech: ['Spring Boot', 'Java 21', 'React', 'TypeScript', 'PostgreSQL', 'Tailwind'],
       image: hr1,
